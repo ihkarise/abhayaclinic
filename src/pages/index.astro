@@ -1,0 +1,179 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import WhatsAppButton from '@components/WhatsAppButton.astro';
+import CallButton from '@components/CallButton.astro';
+import DirectionsButton from '@components/DirectionsButton.astro';
+import CtaBand from '@components/CtaBand.astro';
+import { clinic } from '@data/clinic';
+import { site } from '@config/site';
+import {
+  graph,
+  organizationSchema,
+  websiteSchema,
+  physicianSchema,
+} from '@/lib/schema';
+
+const conditions = (await getCollection('conditions')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const services = (await getCollection('services')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
+  .slice(0, 3);
+
+const schema = graph(
+  organizationSchema(),
+  websiteSchema(),
+  physicianSchema()
+);
+---
+
+<BaseLayout
+  title={`${site.name} | ${site.tagline}`}
+  description={site.description}
+  canonical="/"
+  schema={schema}
+>
+  {/* Hero */}
+  <section class="relative overflow-hidden bg-mist">
+    <div class="container-x grid gap-10 py-20 lg:grid-cols-2 lg:items-center lg:py-28">
+      <div>
+        <p class="mb-4 inline-flex rounded-full bg-soft px-4 py-1.5 text-sm font-semibold text-primary">
+          Allergy-focused care in Nilambur
+        </p>
+        <h1 class="font-heading text-4xl font-bold leading-tight text-ink sm:text-5xl">
+          Abhaya Allergy Center
+        </h1>
+        <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
+          Care and clear guidance for allergic rhinitis, sinus allergy, asthma
+          &amp; wheezing, eczema, urticaria and related concerns — with
+          {' '}{clinic.doctor}, in person or online.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <WhatsAppButton context="booking" label="Chat on WhatsApp" size="lg" />
+          <CallButton variant="outline" class="!px-7 !py-3.5 !text-base" />
+        </div>
+        <p class="mt-4 text-sm text-ink-soft">{clinic.hours.summary} · {clinic.address.locality}, {clinic.address.region}</p>
+      </div>
+      <div class="relative">
+        <div class="aspect-[4/3] rounded-3xl bg-gradient-to-br from-soft to-leaf/30 shadow-card grid place-items-center">
+          <span class="font-heading text-6xl font-bold text-primary/30">ABHAYA</span>
+        </div>
+        {/* TODO: replace placeholder with optimized clinic/hero image (see MISSING-INFORMATION). */}
+      </div>
+    </div>
+  </section>
+
+  {/* About the doctor */}
+  <section class="container-x py-20">
+    <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+      <div class="order-2 aspect-square max-w-md rounded-3xl bg-soft lg:order-1"></div>
+      <div class="order-1 lg:order-2">
+        <h2 class="font-heading text-3xl font-bold">About Dr Varun Vasudev</h2>
+        <p class="mt-4 text-ink-soft">
+          {clinic.doctor} completed his BHMS from Martin Homoeopathic Medical
+          College, Coimbatore, and is a third-generation doctor. Alongside
+          consultation, he has a long-standing interest in health education and
+          counselling.
+        </p>
+        <a href="/about/dr-varun-vasudev/" class="mt-6 inline-flex font-semibold text-primary hover:text-primary-dark">
+          Read more about the doctor →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* Allergy focus */}
+  <section class="bg-mist py-20">
+    <div class="container-x">
+      <div class="mb-10 max-w-2xl">
+        <h2 class="font-heading text-3xl font-bold">Allergy conditions we focus on</h2>
+        <p class="mt-3 text-ink-soft">Learn about the concern that brings you here.</p>
+      </div>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          conditions.map((c) => (
+            <a href={`/conditions/${c.id}/`} class="group rounded-2xl bg-white p-6 shadow-card transition-transform hover:-translate-y-1">
+              <h3 class="font-heading text-lg font-semibold text-ink group-hover:text-primary">{c.data.title}</h3>
+              <p class="mt-2 text-sm text-ink-soft">{c.data.summary}</p>
+              <span class="mt-4 inline-flex text-sm font-semibold text-primary">Learn more →</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* Consultation options */}
+  <section class="container-x py-20">
+    <div class="mb-10 max-w-2xl">
+      <h2 class="font-heading text-3xl font-bold">Consultation options</h2>
+      <p class="mt-3 text-ink-soft">Choose what works for you.</p>
+    </div>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        services.map((s) => (
+          <a href={`/services/${s.id}/`} class="rounded-2xl border border-black/5 p-6 transition-colors hover:border-primary/30 hover:bg-mist">
+            <h3 class="font-heading text-lg font-semibold text-ink">{s.data.title}</h3>
+            <p class="mt-2 text-sm text-ink-soft">{s.data.summary}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* Health education */}
+  {
+    posts.length > 0 && (
+      <section class="bg-mist py-20">
+        <div class="container-x">
+          <div class="mb-10 flex items-end justify-between gap-4">
+            <div>
+              <h2 class="font-heading text-3xl font-bold">Health education</h2>
+              <p class="mt-3 text-ink-soft">Practical allergy information.</p>
+            </div>
+            <a href="/blog/" class="shrink-0 font-semibold text-primary hover:text-primary-dark">All articles →</a>
+          </div>
+          <div class="grid gap-5 md:grid-cols-3">
+            {posts.map((p) => (
+              <a href={`/blog/${p.id}/`} class="rounded-2xl bg-white p-6 shadow-card">
+                <span class="text-xs font-semibold uppercase tracking-wide text-primary">{p.data.category.replace('-', ' ')}</span>
+                <h3 class="mt-2 font-heading text-lg font-semibold text-ink">{p.data.title}</h3>
+                <p class="mt-2 text-sm text-ink-soft">{p.data.excerpt ?? p.data.description}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {/* Clinic location */}
+  <section class="container-x py-20">
+    <div class="grid gap-10 lg:grid-cols-2">
+      <div>
+        <h2 class="font-heading text-3xl font-bold">Visit the clinic</h2>
+        <address class="mt-4 not-italic text-ink-soft">
+          <strong class="block text-ink">{clinic.formerName}</strong>
+          {clinic.address.line1}<br />
+          {clinic.address.line2}<br />
+          {clinic.address.locality}, {clinic.address.region} {clinic.address.postalCode}
+        </address>
+        <p class="mt-4 text-ink-soft">{clinic.hours.summary}</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <DirectionsButton />
+          <CallButton variant="ghost" />
+        </div>
+      </div>
+      <div class="aspect-video rounded-3xl bg-soft grid place-items-center text-ink-soft">
+        <span>Map preview — <a class="ml-1 font-semibold text-primary underline" href={clinic.maps.directionsUrl} target="_blank" rel="noopener noreferrer">open directions</a></span>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

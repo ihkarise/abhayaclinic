@@ -1,4 +1,13 @@
-name: Deploy to GitHub Pages
+# =============================================================================
+# DEVELOPMENT ONLY — TEMPORARY — WILL BE REMOVED AFTER GITLAB MIGRATION
+# -----------------------------------------------------------------------------
+# This GitHub Pages workflow exists purely for development-phase previews.
+# The single source of production truth is GitLab Pages (.gitlab-ci.yml) on the
+# custom domain https://abhayaallergycenter.com/.
+# GitHub and GitLab must NOT become competing production deployments: once the
+# GitLab migration is approved, delete this file. See docs/DEPLOYMENT.md.
+# =============================================================================
+name: Deploy to GitHub Pages (DEV PREVIEW — TEMPORARY)
 
 on:
   push:
@@ -27,7 +36,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Install dependencies

@@ -1,0 +1,74 @@
+---
+import { clinic } from '@data/clinic';
+import { footerNav } from '@data/navigation';
+import { whatsappUrl, whatsappMessages } from '@/lib/whatsapp';
+
+const year = new Date().getFullYear();
+const socials = Object.entries(clinic.social).filter(([, url]) => url);
+---
+
+<footer class="mt-24 bg-primary-dark text-white">
+  <div class="container-x grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <span class="block font-heading text-2xl font-bold">ABHAYA</span>
+      <span class="block text-xs uppercase tracking-widest text-soft">Allergy Center</span>
+      <p class="mt-4 max-w-xs text-sm leading-relaxed text-white/80">
+        Allergy-focused care in Nilambur, Kerala — allergic rhinitis, sinus
+        allergy, asthma &amp; wheezing, eczema, urticaria and related concerns.
+      </p>
+      {
+        socials.length > 0 && (
+          <div class="mt-5 flex gap-4">
+            {socials.map(([name, url]) => (
+              <a href={url} target="_blank" rel="noopener noreferrer" class="text-soft hover:text-white transition-colors capitalize text-sm">
+                {name}
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    <nav aria-label="Explore">
+      <h2 class="mb-4 font-heading text-lg font-semibold text-soft">Explore</h2>
+      <ul class="space-y-3">
+        {footerNav.explore.map((l) => (
+          <li><a href={l.href} class="text-sm text-white/80 hover:text-white transition-colors">{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav aria-label="Patients">
+      <h2 class="mb-4 font-heading text-lg font-semibold text-soft">Patients</h2>
+      <ul class="space-y-3">
+        {footerNav.patient.map((l) => (
+          <li><a href={l.href} class="text-sm text-white/80 hover:text-white transition-colors">{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="mb-4 font-heading text-lg font-semibold text-soft">Contact</h2>
+      <address class="not-italic text-sm text-white/80 space-y-3">
+        <p>{clinic.address.line1}<br />{clinic.address.line2}<br />{clinic.address.locality}, {clinic.address.region} {clinic.address.postalCode}</p>
+        <p><a href={`tel:${clinic.phone.tel}`} class="hover:text-white">{clinic.phone.display}</a></p>
+        <p><a href={`mailto:${clinic.email}`} class="hover:text-white">{clinic.email}</a></p>
+        <p>{clinic.hours.summary}</p>
+      </address>
+      <a href={whatsappUrl(whatsappMessages.booking)} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex rounded-full bg-[#0A7A39] px-4 py-2 text-xs font-semibold text-white hover:bg-[#087636]">
+        Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <div class="border-t border-white/15">
+    <div class="container-x flex flex-col items-center justify-between gap-4 py-6 text-sm text-white/70 md:flex-row">
+      <p>© {year} {clinic.legalName}. All rights reserved.</p>
+      <nav aria-label="Legal" class="flex gap-6">
+        {footerNav.legal.map((l) => (
+          <a href={l.href} class="hover:text-white transition-colors">{l.label}</a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</footer>

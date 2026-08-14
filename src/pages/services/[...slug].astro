@@ -1,0 +1,66 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import WhatsAppButton from '@components/WhatsAppButton.astro';
+import CtaBand from '@components/CtaBand.astro';
+import { graph, breadcrumbSchema } from '@/lib/schema';
+
+export const getStaticPaths = (async () => {
+  const services = await getCollection('services');
+  return services.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Services', url: '/services/' },
+  { name: data.title, url: `/services/${entry.id}/` },
+];
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.seo?.description ?? data.summary}
+  canonical={`/services/${entry.id}/`}
+  schema={graph(breadcrumbSchema(crumbs))}
+>
+  <header class="bg-mist">
+    <div class="container-x py-12">
+      <Breadcrumbs crumbs={crumbs} />
+      <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">{data.title}</h1>
+      <p class="mt-4 max-w-3xl text-lg text-ink-soft">{data.intro}</p>
+    </div>
+  </header>
+
+  <div class="container-x grid gap-12 py-14 lg:grid-cols-[1fr_320px]">
+    <div class="prose-clinic max-w-none">
+      {data.forWhom && (<><h2>Who it is for</h2><p>{data.forWhom}</p></>)}
+      {
+        data.howItWorks.length > 0 && (
+          <>
+            <h2>How it works</h2>
+            <ol class="list-decimal pl-5">{data.howItWorks.map((s) => <li>{s}</li>)}</ol>
+          </>
+        )
+      }
+      <Content />
+    </div>
+    <aside class="lg:sticky lg:top-24 lg:self-start">
+      <div class="rounded-2xl border border-black/5 bg-white p-6 shadow-card">
+        <h2 class="font-heading text-lg font-semibold">Book this consultation</h2>
+        <p class="mt-2 text-sm text-ink-soft">Message us on WhatsApp to arrange a time.</p>
+        <WhatsAppButton context="booking" label="Chat on WhatsApp" class="mt-4 w-full" />
+      </div>
+    </aside>
+  </div>
+
+  <CtaBand />
+</BaseLayout>

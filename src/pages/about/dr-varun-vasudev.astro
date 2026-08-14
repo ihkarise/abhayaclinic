@@ -1,0 +1,89 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import WhatsAppButton from '@components/WhatsAppButton.astro';
+import CtaBand from '@components/CtaBand.astro';
+import { doctor } from '@data/doctor';
+import { graph, breadcrumbSchema, physicianSchema } from '@/lib/schema';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'About', url: '/about/' },
+  { name: doctor.name, url: '/about/dr-varun-vasudev/' },
+];
+
+// Render only fields that carry verified information. Missing fields produce
+// no heading — see docs/DOCTOR-CONTENT-VERIFICATION.md.
+const primaryQual = doctor.qualifications[0];
+const subtitle = [primaryQual?.degree, 'Allergy-focused consultation']
+  .filter(Boolean)
+  .join(' · ');
+---
+
+<BaseLayout
+  title={doctor.name}
+  description={`${doctor.name}, ${primaryQual?.degree ?? ''} — allergy-focused consultation at Abhaya Allergy Center, Nilambur. In-person and online consultations.`}
+  canonical="/about/dr-varun-vasudev/"
+  schema={graph(breadcrumbSchema(crumbs), physicianSchema())}
+>
+  <header class="bg-mist">
+    <div class="container-x py-12">
+      <Breadcrumbs crumbs={crumbs} />
+      <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">{doctor.name}</h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-soft">{subtitle}</p>
+    </div>
+  </header>
+
+  <div class="container-x grid gap-12 py-14 lg:grid-cols-[1fr_320px]">
+    <div class="prose-clinic max-w-none">
+      <h2>Professional introduction</h2>
+      <p>{doctor.professionalBio}</p>
+
+      {
+        doctor.qualifications.length > 0 && (
+          <>
+            <h2>Qualifications</h2>
+            <ul>
+              {doctor.qualifications.map((q) => (
+                <li>
+                  {q.degree} — {q.institution}
+                  {q.year ? ` (${q.year})` : ''}
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      {doctor.registration && (<><h2>Registration</h2><p>{doctor.registration}</p></>)}
+      {doctor.experience && (<><h2>Experience</h2><p>{doctor.experience}</p></>)}
+
+      {
+        doctor.areasOfFocus.length > 0 && (
+          <>
+            <h2>Areas of focus</h2>
+            <ul>{doctor.areasOfFocus.map((a) => <li>{a}</li>)}</ul>
+          </>
+        )
+      }
+
+      {doctor.consultationApproach && (<><h2>Approach to consultation</h2><p>{doctor.consultationApproach}</p></>)}
+      {doctor.healthEducation && (<><h2>Health education</h2><p>{doctor.healthEducation}</p></>)}
+
+      <p class="text-sm">
+        <em>Registration details and any further qualifications or memberships
+        will be added here once verified.</em>
+      </p>
+    </div>
+
+    <aside class="lg:sticky lg:top-24 lg:self-start">
+      <div class="rounded-2xl border border-black/5 bg-white p-6 shadow-card">
+        <h2 class="font-heading text-lg font-semibold">Book a consultation</h2>
+        <p class="mt-2 text-sm text-ink-soft">In person or online — message us on WhatsApp.</p>
+        <WhatsAppButton context="booking" label="Chat on WhatsApp" class="mt-4 w-full" />
+      </div>
+    </aside>
+  </div>
+
+  <CtaBand />
+</BaseLayout>

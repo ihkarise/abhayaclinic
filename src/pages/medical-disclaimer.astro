@@ -1,0 +1,47 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import { graph, breadcrumbSchema } from '@/lib/schema';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Medical Disclaimer', url: '/medical-disclaimer/' },
+];
+---
+
+<BaseLayout
+  title="Medical Disclaimer"
+  description="The information on the Abhaya Allergy Center website is for general education and is not a substitute for professional medical advice."
+  canonical="/medical-disclaimer/"
+  schema={graph(breadcrumbSchema(crumbs))}
+>
+  <section class="container-x py-12">
+    <div class="mx-auto max-w-3xl">
+      <Breadcrumbs crumbs={crumbs} />
+      <h1 class="mt-6 font-heading text-4xl font-bold">Medical Disclaimer</h1>
+      <div class="prose-clinic mt-8">
+        <p>
+          The information provided on this website is for general educational
+          purposes only. It is not intended to be, and should not be relied upon
+          as, medical advice, diagnosis or treatment.
+        </p>
+        <p>
+          Always seek the advice of a qualified doctor or other health provider
+          with any questions you may have about a medical condition. Never
+          disregard professional medical advice, or delay seeking it, because of
+          something you have read on this website.
+        </p>
+        <p>
+          Health conditions and responses to care vary from person to person.
+          Information about conditions on this site does not guarantee any
+          particular result, and individual outcomes differ.
+        </p>
+        <p>
+          If you think you may have a medical emergency — for example severe
+          difficulty breathing, or swelling of the face, lips or throat — seek
+          emergency care immediately.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

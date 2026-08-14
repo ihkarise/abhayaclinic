@@ -1,0 +1,69 @@
+# GitLab CI/CD — Abhaya Allergy Center
+# Builds the Astro static site and deploys it to GitLab Pages.
+#
+# Final deployment target: GitLab Pages on the custom domain
+# https://abhayaallergycenter.com/ (configured in the GitLab project's
+# Pages settings — see docs/DEPLOYMENT.md).
+#
+# This file is prepared now; the repository is still developed on GitHub.
+# It does not hard-code any GitLab namespace, so it works once migrated.
+
+image: node:22
+
+stages:
+  - install
+  - validate
+  - deploy
+
+# Cache node_modules between jobs/pipelines keyed on the lockfile.
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - node_modules/
+    - .astro/
+
+install:
+  stage: install
+  script:
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 hour
+
+# Type-check + build. A failure here blocks deployment.
+validate:
+  stage: validate
+  needs: [install]
+  script:
+    - npm run typecheck
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 hour
+
+# GitLab Pages deployment.
+#
+# NOTE on the public/ directory: Astro uses `public/` as its SOURCE static
+# directory (favicon, robots.txt, webmanifest) and builds the final site to
+# `dist/`. To avoid the classic conflict of treating `public/` as both source
+# and Pages output, we do NOT rename dist -> public. Instead we use the modern
+# GitLab `pages.publish` keyword to publish the `dist/` directory directly.
+# (Requires GitLab 17.9+, i.e. current GitLab.com / recent self-managed.)
+pages:
+  stage: deploy
+  needs: [validate]
+  script:
+    - echo "Publishing Astro build output from dist/ to GitLab Pages"
+  # `publish` (GitLab 16.1+) sets the directory served by Pages, so we can
+  # keep Astro's native dist/ output instead of renaming it to public/.
+  publish: dist
+  artifacts:
+    paths:
+      - dist
+  rules:
+    # Deploy only from the default branch.
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
