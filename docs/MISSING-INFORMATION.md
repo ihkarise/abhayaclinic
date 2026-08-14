@@ -11,8 +11,10 @@ shows an honest empty state. **Confirm each item with the clinic before launch.*
 - [ ] **Official email** on the new domain (currently `info@drvarunvasudev.com`).
 - [ ] **Exact clinic geo-coordinates** (lat/lng) — `clinic.maps.geo` is `null`;
       `LocalBusiness` geo is omitted until provided.
-- [ ] **Official Google Business Profile / Maps place URL** (currently a generic
-      directions query).
+- [ ] **Google Business Profile URL: Missing.** No profile URL is confirmed. No
+      GBP integration is created or claimed. If a profile exists, record the
+      verified URL here and add to `clinic.ts` + `sameAs`; if not, it stays
+      **Missing**. (Maps directions currently use a generic query.)
 - [ ] **Opening days.** About page says Mon–Sat 9:00 AM–7:00 PM; Contact page
       omits days. Sunday assumed closed. Confirm.
 - [ ] **Facebook / Twitter URLs** (blank in `clinic.social`). Instagram
@@ -22,11 +24,16 @@ shows an honest empty state. **Confirm each item with the clinic before launch.*
 ## Brand & doctor
 - [ ] **Final brand name usage.** New name is "Abhaya Allergy Center"; signage /
       registration reads "Abhaya Homoeopathic Medical Center" (`clinic.formerName`).
-- [ ] **Dr Varun Vasudev's full credentials** — registration number, any
-      additional qualifications/memberships. Only "BHMS, Martin Homoeopathic
-      Medical College, Coimbatore" is stated (from the old About page). Physician
-      JSON-LD omits credentials until verified.
-- [ ] **Doctor photo** (real, optimized) for the doctor page and home.
+- [ ] **Dr Varun Vasudev — registration number: Missing.** Never invented.
+      `src/data/doctor.ts` keeps it `null`; Physician JSON-LD omits it.
+- [ ] **Dr Varun Vasudev — years of experience: Missing.** Never inferred.
+- [ ] **Additional qualifications / memberships / awards / affiliations: Missing.**
+      Only "BHMS, Martin Homoeopathic Medical College, Coimbatore" is stated.
+      Full breakdown in `DOCTOR-CONTENT-VERIFICATION.md`.
+- [ ] **Doctor photo** (real, with usage consent) — see `BRAND-ASSET-REQUIREMENTS.md`.
+      Must be a real photograph; never AI-generated/stock as the doctor's identity.
+
+Full brand asset register: `BRAND-ASSET-REQUIREMENTS.md`.
 
 ## Condition list
 - [ ] **Doctor-approved final allergy condition list.** Current 6 are drawn from

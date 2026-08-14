@@ -123,17 +123,27 @@ const schema = faqSchema
       </aside>
     </div>
 
-    {
-      !data.medicalReviewed && (
-        <div class="container-x">
-          <p class="rounded-xl bg-soft/50 px-4 py-3 text-sm text-ink-soft">
-            This page provides general information and is not a substitute for
-            professional medical advice. Please consult a qualified doctor about
-            your individual situation.
+    <div class="container-x space-y-3">
+      {
+        /* Show a review line ONLY when review actually happened:
+           medicalReviewed AND reviewedBy AND reviewedAt must all be present. */
+        data.medicalReviewed && data.reviewedBy && data.reviewedAt && (
+          <p class="text-sm text-ink-soft">
+            Medically reviewed by {data.reviewedBy} on{' '}
+            {data.reviewedAt.toLocaleDateString('en-IN', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}.
           </p>
-        </div>
-      )
-    }
+        )
+      }
+      <p class="rounded-xl bg-soft/50 px-4 py-3 text-sm text-ink-soft">
+        This page provides general information and is not a substitute for
+        professional medical advice. Please consult a qualified doctor about
+        your individual situation.
+      </p>
+    </div>
   </article>
 
   <CtaBand condition={data.title} heading={`Living with ${data.title.toLowerCase()}?`} />

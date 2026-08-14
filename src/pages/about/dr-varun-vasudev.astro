@@ -3,67 +3,76 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
 import WhatsAppButton from '@components/WhatsAppButton.astro';
 import CtaBand from '@components/CtaBand.astro';
-import { clinic } from '@data/clinic';
+import { doctor } from '@data/doctor';
 import { graph, breadcrumbSchema, physicianSchema } from '@/lib/schema';
 
 const crumbs = [
   { name: 'Home', url: '/' },
   { name: 'About', url: '/about/' },
-  { name: clinic.doctor, url: '/about/dr-varun-vasudev/' },
+  { name: doctor.name, url: '/about/dr-varun-vasudev/' },
 ];
+
+// Render only fields that carry verified information. Missing fields produce
+// no heading — see docs/DOCTOR-CONTENT-VERIFICATION.md.
+const primaryQual = doctor.qualifications[0];
+const subtitle = [primaryQual?.degree, 'Allergy-focused consultation']
+  .filter(Boolean)
+  .join(' · ');
 ---
 
 <BaseLayout
-  title={`${clinic.doctor}`}
-  description={`${clinic.doctor}, BHMS — allergy-focused consultation at Abhaya Allergy Center, Nilambur. In-person and online consultations.`}
+  title={doctor.name}
+  description={`${doctor.name}, ${primaryQual?.degree ?? ''} — allergy-focused consultation at Abhaya Allergy Center, Nilambur. In-person and online consultations.`}
   canonical="/about/dr-varun-vasudev/"
   schema={graph(breadcrumbSchema(crumbs), physicianSchema())}
 >
   <header class="bg-mist">
     <div class="container-x py-12">
       <Breadcrumbs crumbs={crumbs} />
-      <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">{clinic.doctor}</h1>
-      <p class="mt-4 max-w-2xl text-lg text-ink-soft">BHMS · Allergy-focused consultation &amp; health education</p>
+      <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">{doctor.name}</h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-soft">{subtitle}</p>
     </div>
   </header>
 
   <div class="container-x grid gap-12 py-14 lg:grid-cols-[1fr_320px]">
     <div class="prose-clinic max-w-none">
       <h2>Professional introduction</h2>
-      <p>
-        {clinic.doctor} completed his BHMS from Martin Homoeopathic Medical
-        College, Coimbatore, and is a third-generation doctor. He consults with
-        patients both in person at the clinic in Nilambur and online.
-      </p>
+      <p>{doctor.professionalBio}</p>
 
-      <h2>Qualifications</h2>
-      <ul>
-        <li>BHMS — Martin Homoeopathic Medical College, Coimbatore</li>
-      </ul>
+      {
+        doctor.qualifications.length > 0 && (
+          <>
+            <h2>Qualifications</h2>
+            <ul>
+              {doctor.qualifications.map((q) => (
+                <li>
+                  {q.degree} — {q.institution}
+                  {q.year ? ` (${q.year})` : ''}
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      {doctor.registration && (<><h2>Registration</h2><p>{doctor.registration}</p></>)}
+      {doctor.experience && (<><h2>Experience</h2><p>{doctor.experience}</p></>)}
+
+      {
+        doctor.areasOfFocus.length > 0 && (
+          <>
+            <h2>Areas of focus</h2>
+            <ul>{doctor.areasOfFocus.map((a) => <li>{a}</li>)}</ul>
+          </>
+        )
+      }
+
+      {doctor.consultationApproach && (<><h2>Approach to consultation</h2><p>{doctor.consultationApproach}</p></>)}
+      {doctor.healthEducation && (<><h2>Health education</h2><p>{doctor.healthEducation}</p></>)}
+
       <p class="text-sm">
-        <em>Further qualifications, registration details and professional
-        memberships will be added once verified.</em>
-      </p>
-
-      <h2>Areas of focus</h2>
-      <p>
-        Allergy-related concerns including allergic rhinitis, sinus allergy,
-        asthma and wheezing, adenoid enlargement, eczema and urticaria.
-      </p>
-
-      <h2>Approach to consultation</h2>
-      <p>
-        Each consultation begins by understanding your symptoms, history and
-        likely triggers, so that guidance can be tailored to your individual
-        situation. {clinic.doctor} also offers counselling and health guidance
-        as part of whole-person care.
-      </p>
-
-      <h2>Health education</h2>
-      <p>
-        {clinic.doctor} has a long-standing interest in health education —
-        sharing health information through articles and social media, and
-        conducting health awareness sessions in the community.
+        <em>Registration details and any further qualifications or memberships
+        will be added here once verified.</em>
       </p>
     </div>
 

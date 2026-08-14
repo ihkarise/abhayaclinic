@@ -143,10 +143,32 @@ const beforeAfter = defineCollection({
     }),
 });
 
+/**
+ * Testimonials. Structural model only — NO testimonial is created by us and
+ * none renders unless `consentObtained` AND `published` are both true. Ratings
+ * are optional and only stored if genuinely provided; aggregate-rating
+ * structured data is never generated from them (see spec §25, §57).
+ */
+const testimonials = defineCollection({
+  loader: glob({ base: './src/content/testimonials', pattern: '**/*.md' }),
+  schema: z.object({
+    /** Patient display name exactly as the patient authorised it. */
+    name: z.string(),
+    quote: z.string(),
+    /** Only if genuinely provided by the patient. */
+    rating: z.number().min(1).max(5).optional(),
+    date: z.coerce.date().optional(),
+    conditionLabel: z.string().optional(),
+    consentObtained: z.boolean().default(false),
+    published: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   conditions,
   services,
   blog,
   patientStories,
   beforeAfter,
+  testimonials,
 };

@@ -1,5 +1,9 @@
 # Image Audit
 
+_Reviewed Phase 2 — unchanged: still no raster images. Asset requirements are
+consolidated in `BRAND-ASSET-REQUIREMENTS.md`; patient-image privacy rules are
+in `CONTENT-GOVERNANCE.md` (before/after + testimonials collections)._
+
 ## Current state
 The site currently ships **no raster images**. All visuals (hero, doctor
 portrait area, map preview, card art) are lightweight CSS placeholders
