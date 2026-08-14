@@ -58,9 +58,11 @@ pages:
   needs: [validate]
   script:
     - echo "Publishing Astro build output from dist/ to GitLab Pages"
-  # `publish` (GitLab 16.1+) sets the directory served by Pages, so we can
-  # keep Astro's native dist/ output instead of renaming it to public/.
-  publish: dist
+  # Current GitLab (17.9+) reads the custom output directory from the nested
+  # `pages.publish` keyword, so Pages serves Astro's dist/ instead of the
+  # default public/. (The old job-root `publish` was moved under `pages`.)
+  pages:
+    publish: dist
   artifacts:
     paths:
       - dist

@@ -6,9 +6,10 @@ import Breadcrumbs from '@components/Breadcrumbs.astro';
 import WhatsAppButton from '@components/WhatsAppButton.astro';
 import CtaBand from '@components/CtaBand.astro';
 import { graph, breadcrumbSchema } from '@/lib/schema';
+import { isPublished } from '@/lib/content';
 
 export const getStaticPaths = (async () => {
-  const services = await getCollection('services');
+  const services = (await getCollection('services')).filter(isPublished);
   return services.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },

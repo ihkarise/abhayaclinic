@@ -4,10 +4,11 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
 import CtaBand from '@components/CtaBand.astro';
 import { graph, breadcrumbSchema } from '@/lib/schema';
+import { isPublished } from '@/lib/content';
 
-const services = (await getCollection('services')).sort(
-  (a, b) => a.data.order - b.data.order
-);
+const services = (await getCollection('services'))
+  .filter(isPublished)
+  .sort((a, b) => a.data.order - b.data.order);
 const crumbs = [
   { name: 'Home', url: '/' },
   { name: 'Services', url: '/services/' },

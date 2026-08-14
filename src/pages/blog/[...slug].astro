@@ -5,11 +5,12 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
 import WhatsAppButton from '@components/WhatsAppButton.astro';
 import { graph, breadcrumbSchema, articleSchema } from '@/lib/schema';
+import { isPublishedPost } from '@/lib/content';
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection('blog');
   return posts
-    .filter((p) => !p.data.draft)
+    .filter(isPublishedPost)
     .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }) satisfies GetStaticPaths;
 
