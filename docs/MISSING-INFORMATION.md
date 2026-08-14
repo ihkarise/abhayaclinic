@@ -45,12 +45,17 @@ Full brand asset register: `BRAND-ASSET-REQUIREMENTS.md`.
 - [ ] **Medical review** of every condition page. All are `medicalReviewed: false`.
 
 ## Media assets
-- [ ] **Real hero / clinic images** (optimized AVIF/WebP). Placeholders in use.
+Intake structure and auto-detection are now in place (Phase 3B) — see
+`src/assets/README.md` and `docs/BRAND-ASSET-REQUIREMENTS.md`. Dropping a
+correctly-named file at the documented path is all that's needed; run
+`npm run assets:check` for current status. Still outstanding:
+- [ ] **Real hero / clinic images** (optimized AVIF/WebP) → `src/assets/photos/{hero,clinic}/`.
 - [ ] **`public/og-image.jpg`** — branded 1200×630 social-share image (referenced
       by SEO meta; file not yet added).
 - [ ] **`public/apple-touch-icon.png`** and **`public/favicon.ico`** (SVG favicon
       exists). Use official Abhaya branding.
-- [ ] **Gallery images** with descriptive filenames, dimensions, alt text.
+- [ ] **Gallery images** with descriptive filenames, dimensions, alt text →
+      `src/assets/photos/gallery/`.
 
 ## Patient content (consent-gated)
 - [ ] **Real testimonials** the clinic is authorized to publish (none on the site

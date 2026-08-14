@@ -1,18 +1,27 @@
 ---
+import { Image } from 'astro:assets';
 import { primaryNav } from '@data/navigation';
 import { clinic } from '@data/clinic';
 import { whatsappUrl, whatsappMessages } from '@/lib/whatsapp';
+import { getBrandMark } from '@/lib/media';
 
 const current = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? current === '/' : current.startsWith(href);
+const mark = getBrandMark();
 ---
 
 <header class="sticky top-0 z-50 border-b border-black/5 bg-white/90 backdrop-blur-md">
   <div class="container-x flex h-16 items-center justify-between gap-4">
     <a href="/" class="flex items-center gap-2.5 shrink-0">
       <span class="sr-only">Abhaya Allergy Center — home</span>
-      <span aria-hidden="true" class="grid h-9 w-9 place-items-center rounded-lg bg-primary text-lg font-bold text-white">A</span>
+      {
+        mark ? (
+          <Image src={mark} alt="" width={36} height={36} loading="eager" class="h-9 w-9 rounded-lg object-contain" />
+        ) : (
+          <span aria-hidden="true" class="grid h-9 w-9 place-items-center rounded-lg bg-primary text-lg font-bold text-white">A</span>
+        )
+      }
       <span aria-hidden="true" class="flex flex-col leading-tight">
         <span class="font-heading text-base font-bold tracking-tight text-primary">ABHAYA</span>
         <span class="hidden text-[10px] uppercase tracking-widest text-ink-soft sm:block">Allergy Center</span>
