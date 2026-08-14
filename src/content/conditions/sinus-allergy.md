@@ -1,6 +1,7 @@
 ---
 title: Sinus Allergy
 order: 2
+status: published
 featured: true
 medicalReviewed: false
 summary: Persistent nasal congestion, facial pressure, headaches and recurrent sinus discomfort linked to allergic inflammation.

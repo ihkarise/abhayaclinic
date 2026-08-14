@@ -10,9 +10,10 @@ const isActive = (href: string) =>
 
 <header class="sticky top-0 z-50 border-b border-black/5 bg-white/90 backdrop-blur-md">
   <div class="container-x flex h-16 items-center justify-between gap-4">
-    <a href="/" class="flex items-center gap-2.5 shrink-0" aria-label="Abhaya Allergy Center home">
-      <span class="grid h-9 w-9 place-items-center rounded-lg bg-primary text-lg font-bold text-white">A</span>
-      <span class="flex flex-col leading-tight">
+    <a href="/" class="flex items-center gap-2.5 shrink-0">
+      <span class="sr-only">Abhaya Allergy Center — home</span>
+      <span aria-hidden="true" class="grid h-9 w-9 place-items-center rounded-lg bg-primary text-lg font-bold text-white">A</span>
+      <span aria-hidden="true" class="flex flex-col leading-tight">
         <span class="font-heading text-base font-bold tracking-tight text-primary">ABHAYA</span>
         <span class="hidden text-[10px] uppercase tracking-widest text-ink-soft sm:block">Allergy Center</span>
       </span>
@@ -84,7 +85,7 @@ const isActive = (href: string) =>
       </nav>
       <div class="border-t border-black/5 p-5 flex flex-col gap-3">
         <a href={`tel:${clinic.phone.tel}`} class="flex items-center justify-center gap-2 rounded-xl border border-black/10 py-3 font-medium text-ink">Call {clinic.phone.display}</a>
-        <a href={whatsappUrl(whatsappMessages.booking)} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] py-3 font-medium text-white">WhatsApp</a>
+        <a href={whatsappUrl(whatsappMessages.booking)} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 rounded-xl bg-[#0A7A39] py-3 font-medium text-white">WhatsApp</a>
       </div>
     </div>
   </div>

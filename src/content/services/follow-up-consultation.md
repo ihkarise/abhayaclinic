@@ -1,6 +1,7 @@
 ---
 title: Follow-up Consultation
 order: 3
+status: published
 summary: Review your progress and adjust your care over time with a follow-up consultation.
 intro: >-
   Follow-up consultations help track how you are responding, review any changes

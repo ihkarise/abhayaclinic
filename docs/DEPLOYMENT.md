@@ -28,13 +28,18 @@ instructed.
 
 ## `.gitlab-ci.yml` (already in repo)
 Stages: `install` (`npm ci`) → `validate` (`typecheck` + `build`) → `pages`
-(move `dist/` → `public/`, deploy). Node 22. Deploys only from the default
-branch. A failed typecheck or build blocks deployment.
+(publish `dist/`). **Node 22** image (Astro 7 requires Node ≥22.12.0; the
+`node:22` tag resolves to a satisfying 22.x). Deploys only from the default
+branch (`$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH`). A failed typecheck or build
+blocks deployment.
 
-> **Astro + GitLab Pages note:** Astro outputs to `dist/`, but GitLab Pages
-> serves from `public/`. The `pages` job renames `dist` → `public`. Because the
-> project also has a source `public/` for static assets, those assets are
-> already copied into `dist/` during the build, so the rename is safe.
+> **Astro + GitLab Pages — the public/ conflict, resolved.** Astro uses
+> `public/` as its **source** static dir (favicon, robots.txt, webmanifest) and
+> builds the final site to `dist/`. Historically GitLab Pages served from
+> `public/`, which tempts a `dist → public` rename that clobbers the source.
+> We avoid that entirely: the `pages` job uses the **`publish: dist`** keyword
+> (GitLab 16.1+) to serve Astro's native `dist/` output directly. No rename, no
+> source/output collision.
 
 ## Custom domain & DNS (production)
 1. In the GitLab project: **Deploy → Pages → New Domain** →

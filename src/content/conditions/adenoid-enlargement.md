@@ -1,6 +1,7 @@
 ---
 title: Adenoid Enlargement
 order: 4
+status: published
 featured: false
 medicalReviewed: false
 summary: Mouth breathing, snoring, a persistently blocked nose and disturbed sleep in children, often linked to allergy and recurrent infections.

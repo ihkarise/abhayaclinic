@@ -53,8 +53,8 @@ shows an honest empty state. **Confirm each item with the clinic before launch.*
       parts and a phone-number watermark; do **not** republish as-is.
 
 ## Technical follow-ups
-- [ ] **Astro 7 upgrade** evaluation (current 5.18.2; audit advisories fixed in 7,
-      a breaking major — low real-world risk here).
+- [x] **Astro 7 upgrade** — DONE (Phase 1.5). Migrated 5.18.2 → 7.2.2 (current
+      stable); resolved all `npm audit` advisories (3 → 0). See ARCHITECTURE.md.
 - [ ] **Analytics** decision (privacy-friendly, e.g. Plausible) — update Privacy
       Policy accordingly.
 - [ ] **Self-hosted fonts** (Phase 8 performance).

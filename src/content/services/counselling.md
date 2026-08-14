@@ -1,6 +1,7 @@
 ---
 title: Counselling & Guidance
 order: 4
+status: published
 summary: Supportive counselling and health guidance alongside allergy care.
 intro: >-
   Alongside consultation, Dr Varun Vasudev offers counselling and guidance.

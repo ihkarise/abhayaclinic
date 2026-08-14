@@ -1,5 +1,27 @@
-import { defineCollection, reference, z } from 'astro:content';
+import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { z } from 'zod';
+
+/**
+ * Editorial content-status workflow, shared across collections.
+ *   draft        — being written, not for public view
+ *   in-review    — awaiting medical/editorial review
+ *   approved     — reviewed & signed off, not yet live
+ *   published    — live on the site
+ * A page renders publicly only when status === 'published' (and, where
+ * relevant, consent is confirmed). This is independent of `medicalReviewed`,
+ * which controls whether a "Medically reviewed by …" line may appear.
+ */
+const status = z
+  .enum(['draft', 'in-review', 'approved', 'published'])
+  .default('draft');
+
+/** Medical review metadata. Never display a review that did not happen. */
+const medicalReview = {
+  medicalReviewed: z.boolean().default(false),
+  reviewedBy: z.string().optional(),
+  reviewedAt: z.coerce.date().optional(),
+};
 
 /** Reusable SEO overrides available on every content entry. */
 const seo = z
@@ -30,7 +52,8 @@ const conditions = defineCollection({
       .default([]),
     related: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
-    medicalReviewed: z.boolean().default(false),
+    status,
+    ...medicalReview,
     seo,
   }),
 });
@@ -44,6 +67,7 @@ const services = defineCollection({
     intro: z.string(),
     forWhom: z.string().optional(),
     howItWorks: z.array(z.string()).default([]),
+    status,
     seo,
   }),
 });
@@ -70,11 +94,11 @@ const blog = defineCollection({
       tags: z.array(z.string()).default([]),
       featuredImage: image().optional(),
       imageAlt: z.string().optional(),
-      medicalReviewed: z.boolean().default(false),
-      reviewedBy: z.string().optional(),
-      reviewedAt: z.coerce.date().optional(),
+      status,
+      ...medicalReview,
+      /** Hard visibility gate kept for backward-compatible authoring. */
       draft: z.boolean().default(true),
-      canonical: z.string().url().optional(),
+      canonical: z.url().optional(),
     }),
 });
 
@@ -88,8 +112,41 @@ const patientStories = defineCollection({
     consentObtained: z.boolean().default(false),
     summary: z.string(),
     publishedAt: z.coerce.date().optional(),
+    status,
     draft: z.boolean().default(true),
   }),
 });
 
-export const collections = { conditions, services, blog, patientStories };
+/**
+ * Before / After patient-progress cases. Structural model only — no case
+ * renders unless `consentConfirmed` AND `published` are both true (enforced in
+ * the template). Never record an invented diagnosis, duration, method or
+ * outcome, and never include identifying details.
+ */
+const beforeAfter = defineCollection({
+  loader: glob({ base: './src/content/before-after', pattern: '**/*.md' }),
+  schema: ({ image }) =>
+    z.object({
+      /** Stable id, e.g. "case-2026-001". */
+      caseId: z.string(),
+      condition: reference('conditions').optional(),
+      conditionLabel: z.string(),
+      /** Neutral, factual description. No diagnosis/outcome claims. */
+      description: z.string(),
+      beforeImage: image().optional(),
+      afterImage: image().optional(),
+      beforeAlt: z.string().optional(),
+      afterAlt: z.string().optional(),
+      /** Both gates must be true to render. */
+      consentConfirmed: z.boolean().default(false),
+      published: z.boolean().default(false),
+    }),
+});
+
+export const collections = {
+  conditions,
+  services,
+  blog,
+  patientStories,
+  beforeAfter,
+};

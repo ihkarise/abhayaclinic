@@ -1,6 +1,7 @@
 ---
 title: In-person Consultation
 order: 1
+status: published
 summary: Meet Dr Varun Vasudev at the Abhaya Allergy Center clinic in Nilambur for a face-to-face allergy consultation.
 intro: >-
   An in-person consultation lets Dr Varun Vasudev understand your symptoms,

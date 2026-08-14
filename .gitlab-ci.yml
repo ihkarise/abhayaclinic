@@ -45,18 +45,25 @@ validate:
       - dist/
     expire_in: 1 hour
 
-# GitLab Pages: the `pages` job must output the site into `public/`.
-# Astro builds to `dist/`, so we move it into `public/` for deployment.
+# GitLab Pages deployment.
+#
+# NOTE on the public/ directory: Astro uses `public/` as its SOURCE static
+# directory (favicon, robots.txt, webmanifest) and builds the final site to
+# `dist/`. To avoid the classic conflict of treating `public/` as both source
+# and Pages output, we do NOT rename dist -> public. Instead we use the modern
+# GitLab `pages.publish` keyword to publish the `dist/` directory directly.
+# (Requires GitLab 17.9+, i.e. current GitLab.com / recent self-managed.)
 pages:
   stage: deploy
   needs: [validate]
   script:
-    - rm -rf public
-    - mv dist public
+    - echo "Publishing Astro build output from dist/ to GitLab Pages"
+  # `publish` (GitLab 16.1+) sets the directory served by Pages, so we can
+  # keep Astro's native dist/ output instead of renaming it to public/.
+  publish: dist
   artifacts:
     paths:
-      - public
-  publish: public
+      - dist
   rules:
     # Deploy only from the default branch.
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'

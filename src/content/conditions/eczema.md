@@ -1,6 +1,7 @@
 ---
 title: Eczema
 order: 5
+status: published
 featured: false
 medicalReviewed: false
 summary: Dry, itchy, inflamed skin that can flare and settle over time, often linked to allergy and sensitive skin.

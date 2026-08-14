@@ -141,7 +141,7 @@ const schema = graph(
           <div class="grid gap-5 md:grid-cols-3">
             {posts.map((p) => (
               <a href={`/blog/${p.id}/`} class="rounded-2xl bg-white p-6 shadow-card">
-                <span class="text-xs font-semibold uppercase tracking-wide text-leaf">{p.data.category.replace('-', ' ')}</span>
+                <span class="text-xs font-semibold uppercase tracking-wide text-primary">{p.data.category.replace('-', ' ')}</span>
                 <h3 class="mt-2 font-heading text-lg font-semibold text-ink">{p.data.title}</h3>
                 <p class="mt-2 text-sm text-ink-soft">{p.data.excerpt ?? p.data.description}</p>
               </a>

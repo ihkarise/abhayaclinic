@@ -1,6 +1,7 @@
 ---
 title: Urticaria (Hives)
 order: 6
+status: published
 featured: false
 medicalReviewed: false
 summary: Recurring itchy hives, welts and skin reactions that can appear suddenly and vary from day to day.

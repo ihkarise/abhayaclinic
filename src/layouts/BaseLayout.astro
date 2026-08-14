@@ -26,8 +26,9 @@ const props = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content={site.themeColor} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {/* Branded favicon.ico + apple-touch-icon.png are pending official assets
+        (see docs/MISSING-INFORMATION.md). The SVG favicon covers modern
+        browsers; icon <link>s are re-added once the real assets land. */}
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 

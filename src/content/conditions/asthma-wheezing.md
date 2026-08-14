@@ -1,6 +1,7 @@
 ---
 title: Asthma & Wheezing
 order: 3
+status: published
 featured: true
 medicalReviewed: false
 summary: Recurring cough, wheezing, chest tightness and breathing difficulty that may be triggered or worsened by allergens.

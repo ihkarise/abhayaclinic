@@ -1,6 +1,7 @@
 ---
 title: Allergic Rhinitis
 order: 1
+status: published
 featured: true
 medicalReviewed: false
 summary: Frequent sneezing, runny or blocked nose, itchy eyes and postnasal drip triggered by allergens such as dust, pollen or pet dander.

@@ -10,6 +10,7 @@ tags:
   - allergic rhinitis
   - prevention
 medicalReviewed: false
+status: published
 draft: false
 ---
 

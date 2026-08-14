@@ -11,7 +11,7 @@
   --color-leaf: #6fae2f; /* accent (darkened from #9AD23B for AA contrast) */
   --color-soft: #dff3d3; /* soft green surface */
   --color-mist: #f2f7ee; /* subtle section background */
-  --color-base: #f7f8f5; /* page background */
+  --color-canvas: #f7f8f5; /* page background */
   --color-ink: #1a1a1a; /* primary text */
   --color-ink-soft: #575757; /* secondary text (AA on white) */
 
@@ -38,7 +38,7 @@
     }
   }
   body {
-    background-color: var(--color-base);
+    background-color: var(--color-canvas);
     color: var(--color-ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;

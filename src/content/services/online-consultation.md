@@ -1,6 +1,7 @@
 ---
 title: Online Consultation
 order: 2
+status: published
 summary: Consult Dr Varun Vasudev from the comfort of your home, wherever you are.
 intro: >-
   An online consultation makes it easier to seek advice without travelling to
