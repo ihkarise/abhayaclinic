@@ -2,10 +2,11 @@ import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 import { site } from '@config/site';
+import { isPublishedPost } from '@/lib/content';
 
 export async function GET(context: APIContext) {
   const posts = (await getCollection('blog'))
-    .filter((p) => !p.data.draft)
+    .filter(isPublishedPost)
     .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 
   return rss({
