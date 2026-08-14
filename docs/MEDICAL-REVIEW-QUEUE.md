@@ -34,6 +34,11 @@ Every medical page and its review/publication state. A page may be **published**
 | About Abhaya | `/about/` | published | Verify claims | Mission/vision reworded from old site |
 | Services (×4) | `/services/…` | published | Low risk | No clinical claims |
 
+## Doctor review instrument
+A per-condition sign-off packet listing every clinical statement on each page
+(Confirm / Edit / Remove) is in **`CONDITION-REVIEW-PACKET.md`**. Use it to run
+the review, then set the frontmatter review fields below.
+
 ## Review workflow
 1. Doctor reviews each condition/article for accuracy and safety.
 2. On sign-off, set in frontmatter: `medicalReviewed: true`, `reviewedBy: "Dr Varun Vasudev"` (or the reviewing clinician), `reviewedAt: <date>`.
