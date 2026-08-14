@@ -6,9 +6,10 @@ import Breadcrumbs from '@components/Breadcrumbs.astro';
 import WhatsAppButton from '@components/WhatsAppButton.astro';
 import CtaBand from '@components/CtaBand.astro';
 import { graph, breadcrumbSchema } from '@/lib/schema';
+import { isPublished } from '@/lib/content';
 
 export const getStaticPaths = (async () => {
-  const conditions = await getCollection('conditions');
+  const conditions = (await getCollection('conditions')).filter(isPublished);
   return conditions.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },
@@ -19,7 +20,7 @@ const { entry } = Astro.props;
 const { data } = entry;
 const { Content } = await render(entry);
 
-const all = await getCollection('conditions');
+const all = (await getCollection('conditions')).filter(isPublished);
 const related = data.related
   .map((id) => all.find((c) => c.id === id))
   .filter(Boolean);

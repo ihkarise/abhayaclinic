@@ -4,10 +4,11 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
 import CtaBand from '@components/CtaBand.astro';
 import { graph, breadcrumbSchema } from '@/lib/schema';
+import { isPublished } from '@/lib/content';
 
-// Only render stories that are published AND have consent recorded.
+// Render only stories that are published (status), not draft, AND consented.
 const stories = (await getCollection('patientStories')).filter(
-  (s) => !s.data.draft && s.data.consentObtained
+  (s) => isPublished(s) && !s.data.draft && s.data.consentObtained
 );
 
 const crumbs = [
