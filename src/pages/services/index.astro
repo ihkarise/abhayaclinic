@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import CtaBand from '@components/CtaBand.astro';
+import { graph, breadcrumbSchema } from '@/lib/schema';
+
+const services = (await getCollection('services')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Services', url: '/services/' },
+];
+---
+
+<BaseLayout
+  title="Consultation Services"
+  description="Consultation services at Abhaya Allergy Center — in-person consultation, online consultation, follow-up consultation and counselling with Dr Varun Vasudev."
+  canonical="/services/"
+  schema={graph(breadcrumbSchema(crumbs))}
+>
+  <section class="container-x pt-10">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">Consultation Services</h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+      Ways to consult Dr Varun Vasudev, in person or online.
+    </p>
+  </section>
+
+  <section class="container-x py-14">
+    <div class="grid gap-5 sm:grid-cols-2">
+      {
+        services.map((s) => (
+          <a href={`/services/${s.id}/`} class="rounded-2xl border border-black/5 bg-white p-7 shadow-card transition-colors hover:border-primary/30">
+            <h2 class="font-heading text-xl font-semibold text-ink">{s.data.title}</h2>
+            <p class="mt-2 text-ink-soft">{s.data.summary}</p>
+            <span class="mt-4 inline-flex text-sm font-semibold text-primary">Learn more →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

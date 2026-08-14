@@ -1,0 +1,72 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import WhatsAppButton from '@components/WhatsAppButton.astro';
+import CallButton from '@components/CallButton.astro';
+import DirectionsButton from '@components/DirectionsButton.astro';
+import { clinic } from '@data/clinic';
+import { graph, breadcrumbSchema, organizationSchema } from '@/lib/schema';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Contact', url: '/contact/' },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description={`Contact Abhaya Allergy Center in Nilambur, Kerala. Chat on WhatsApp, call ${clinic.phone.display}, or visit the clinic.`}
+  canonical="/contact/"
+  schema={graph(breadcrumbSchema(crumbs), organizationSchema())}
+>
+  <section class="container-x pt-10">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">Contact Us</h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+      The quickest way to reach us is on WhatsApp.
+    </p>
+  </section>
+
+  <section class="container-x py-14">
+    <div class="grid gap-10 lg:grid-cols-2">
+      <div class="rounded-3xl border border-black/5 bg-white p-8 shadow-card">
+        <h2 class="font-heading text-2xl font-bold">{clinic.formerName}</h2>
+        <address class="mt-4 not-italic text-ink-soft space-y-4">
+          <p>
+            {clinic.address.line1}<br />
+            {clinic.address.line2}<br />
+            {clinic.address.locality}, {clinic.address.region} {clinic.address.postalCode}
+          </p>
+          <p>
+            <span class="block font-semibold text-ink">Phone</span>
+            <a href={`tel:${clinic.phone.tel}`} class="hover:text-primary">{clinic.phone.display}</a>
+          </p>
+          <p>
+            <span class="block font-semibold text-ink">Email</span>
+            <a href={`mailto:${clinic.email}`} class="hover:text-primary">{clinic.email}</a>
+          </p>
+          <p>
+            <span class="block font-semibold text-ink">Opening hours</span>
+            {clinic.hours.summary}
+          </p>
+        </address>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <WhatsAppButton context="default" label="Chat on WhatsApp" />
+          <CallButton variant="outline" />
+          <DirectionsButton />
+        </div>
+      </div>
+
+      <div class="flex flex-col">
+        <div class="grid flex-1 place-items-center rounded-3xl bg-soft text-center text-ink-soft">
+          <p class="p-8">
+            Map preview<br />
+            <a class="font-semibold text-primary underline" href={clinic.maps.directionsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps →</a>
+          </p>
+        </div>
+        {/* An embedded interactive map can be added later; a lightweight
+            preview + directions link keeps this page fast. */}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

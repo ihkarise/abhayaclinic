@@ -1,3 +1,6 @@
+# TEMPORARY development-phase preview workflow. The production target is
+# GitLab Pages (.gitlab-ci.yml). Do not delete until the GitLab migration is
+# approved. Builds the Astro site (outputs to dist/).
 name: Deploy to GitHub Pages
 
 on:
@@ -27,7 +30,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Install dependencies

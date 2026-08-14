@@ -1,8 +1,22 @@
-node_modules/
-build/
+# build output
 dist/
-coverage/
-.DS_Store
+.output/
+
+# astro
+.astro/
+
+# dependencies
+node_modules/
+
+# environment
+.env
+.env.production
+.env*.local
+
+# logs & os
 *.log
-.env*
-!.env.example
+.DS_Store
+
+# editor
+.vscode/
+.idea/

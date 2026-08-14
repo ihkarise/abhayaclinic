@@ -1,0 +1,6 @@
+# Abhaya Allergy Center
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://abhayaallergycenter.com/sitemap-index.xml

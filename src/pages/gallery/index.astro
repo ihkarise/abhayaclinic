@@ -1,0 +1,50 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import CtaBand from '@components/CtaBand.astro';
+import { graph, breadcrumbSchema } from '@/lib/schema';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Gallery', url: '/gallery/' },
+];
+
+const categories = [
+  'Clinic',
+  'Educational',
+  'Allergy Awareness',
+  'Events',
+  'Social Campaigns',
+];
+---
+
+<BaseLayout
+  title="Gallery"
+  description="Photos and allergy-awareness material from Abhaya Allergy Center, Nilambur."
+  canonical="/gallery/"
+  schema={graph(breadcrumbSchema(crumbs))}
+>
+  <section class="container-x pt-10">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">Gallery</h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+      Clinic photos and allergy-awareness material.
+    </p>
+  </section>
+
+  <section class="container-x py-14">
+    <div class="flex flex-wrap gap-2">
+      {categories.map((c) => (
+        <span class="rounded-full bg-soft px-4 py-1.5 text-sm font-medium text-primary">{c}</span>
+      ))}
+    </div>
+    <div class="mt-8 rounded-2xl border border-dashed border-black/10 p-10 text-center">
+      <p class="text-ink-soft">
+        Optimized gallery images will be added here, each with a descriptive
+        filename, dimensions and alt text.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

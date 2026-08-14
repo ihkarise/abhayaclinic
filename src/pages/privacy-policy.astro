@@ -1,0 +1,63 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import { clinic } from '@data/clinic';
+import { graph, breadcrumbSchema } from '@/lib/schema';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Privacy Policy', url: '/privacy-policy/' },
+];
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="How Abhaya Allergy Center handles the limited information you share when you contact us."
+  canonical="/privacy-policy/"
+  schema={graph(breadcrumbSchema(crumbs))}
+>
+  <section class="container-x py-12">
+    <div class="mx-auto max-w-3xl">
+      <Breadcrumbs crumbs={crumbs} />
+      <h1 class="mt-6 font-heading text-4xl font-bold">Privacy Policy</h1>
+      <div class="prose-clinic mt-8">
+        <p>
+          Abhaya Allergy Center respects your privacy. This website is primarily
+          an information website. It does not require you to create an account or
+          submit personal medical information to browse.
+        </p>
+        <h2>Information we receive</h2>
+        <p>
+          When you contact us — for example by WhatsApp, phone or email — you may
+          share personal details such as your name, contact number and a
+          description of your symptoms. We use this only to respond to your
+          enquiry and to provide care.
+        </p>
+        <h2>WhatsApp and third-party services</h2>
+        <p>
+          Our primary contact method is WhatsApp. Messages you send through
+          WhatsApp are handled under WhatsApp's own privacy terms. Please avoid
+          sharing sensitive information you would prefer to keep private.
+        </p>
+        <h2>Analytics</h2>
+        <p>
+          If website analytics are used, they are configured to understand
+          general, aggregated usage and to improve the site. Details will be
+          updated here if analytics are enabled.
+        </p>
+        <h2>Your information</h2>
+        <p>
+          We do not sell your personal information. If you would like us to update
+          or remove information you have shared with the clinic, please contact us.
+        </p>
+        <h2>Contact</h2>
+        <p>
+          For any privacy questions, contact us at
+          <a href={`mailto:${clinic.email}`}>{clinic.email}</a> or on
+          <a href={`tel:${clinic.phone.tel}`}>{clinic.phone.display}</a>.
+        </p>
+        <p class="text-sm"><em>This policy will be reviewed and expanded before production launch.</em></p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

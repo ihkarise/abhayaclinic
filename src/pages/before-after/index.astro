@@ -1,0 +1,40 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import CtaBand from '@components/CtaBand.astro';
+import { graph, breadcrumbSchema } from '@/lib/schema';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Before & After', url: '/before-after/' },
+];
+---
+
+<BaseLayout
+  title="Before & After / Patient Progress"
+  description="Patient progress at Abhaya Allergy Center, shared responsibly and only with consent."
+  canonical="/before-after/"
+  schema={graph(breadcrumbSchema(crumbs))}
+>
+  <section class="container-x pt-10">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">Patient Progress</h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+      A responsible record of patient progress, prepared and published only with
+      consent.
+    </p>
+  </section>
+
+  <section class="container-x py-14">
+    <div class="rounded-2xl border border-dashed border-black/10 p-10 text-center">
+      <p class="mx-auto max-w-xl text-ink-soft">
+        Before &amp; after cases are being prepared. Any images published here
+        will be consent-approved, stripped of identifying details and metadata,
+        and shown without invented diagnoses, timeframes or outcome claims.
+        Individual results vary.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

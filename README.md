@@ -1,87 +1,45 @@
-# ABHAYA Homoeopathic Medical Center Website
+# Abhaya Allergy Center
 
-A modern, responsive web application for **ABHAYA Homoeopathic Medical Center** (Dr. Varun Vasudev), built with React 19, Vite, Tailwind CSS v4, Lucide Icons, and Motion animations.
+Allergy-first, SEO-focused, WhatsApp-first website for **Abhaya Allergy Center**
+(Dr Varun Vasudev), Nilambur, Kerala.
 
----
+Built with **Astro + TypeScript + Tailwind CSS** as a static site.
+Production domain: `https://abhayaallergycenter.com`.
 
-## 🚀 Step-by-Step Guide: Export & Push to GitHub
+## Quick start
+```bash
+npm install
+npm run dev        # http://localhost:3000
+npm run typecheck  # astro check
+npm run build      # → dist/
+npm run preview
+```
 
-### Method 1: Exporting directly from AI Studio (Easiest)
+## Structure
+- `src/config/site.ts` — domain & brand (single source of truth)
+- `src/data/clinic.ts` — address, phone, WhatsApp, hours, social (single source)
+- `src/data/navigation.ts` — nav links
+- `src/lib/` — `whatsapp.ts` (CTA links), `schema.ts` (JSON-LD)
+- `src/content/` — typed collections: conditions, services, blog, patient-stories
+- `src/components/` — SEO, Header, Footer, CTAs, Breadcrumbs
+- `src/layouts/BaseLayout.astro` — head, SEO, header/footer/floating CTA
+- `src/pages/` — file-based routes
+- `docs/` — architecture, routes, SEO, performance, migration & deployment docs
 
-1. **Export to GitHub / Download ZIP**:
-   - In the top right corner or settings menu of AI Studio, click on **Export** / **GitHub**.
-   - If connected to GitHub, select **Export to GitHub** to automatically create a repository in your GitHub account.
-   - Alternatively, choose **Download ZIP**, extract the folder on your computer, and follow Method 2 below.
+## Editing content
+Add a Markdown file under `src/content/<collection>/`. Schemas are enforced in
+`src/content.config.ts`. Blog articles default to `draft: true` and
+`medicalReviewed: false` — set `draft: false` to publish; only set
+`medicalReviewed: true` after a real doctor review.
 
----
+## Deployment
+- **Now:** GitHub Actions (`.github/workflows/deploy.yml`) for dev preview.
+- **Production target:** GitLab Pages via `.gitlab-ci.yml` on the custom domain.
 
-### Method 2: Pushing to GitHub manually via Command Line
+See **`docs/DEPLOYMENT.md`**. Repository migration to GitLab happens only after
+production approval.
 
-If you downloaded the code as a ZIP file:
-
-1. Open your terminal / command prompt in the project folder.
-2. Initialize a git repository and commit all files:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit - ABHAYA Homeo Website"
-   ```
-3. Create a new repository on [GitHub](https://github.com/new).
-4. Link your local repo and push:
-   ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-   git branch -M main
-   git push -u origin main
-   ```
-
----
-
-## 🌐 Deploying Your Website
-
-### Option A: GitHub Pages (Automated via GitHub Actions)
-
-This repository includes an automated GitHub Actions workflow (`.github/workflows/deploy.yml`).
-
-1. Go to your GitHub repository on github.com.
-2. Click **Settings** > **Pages** (in the left sidebar).
-3. Under **Build and deployment**:
-   - **Source**: Select **GitHub Actions**.
-4. Every time you push or commit changes to `main`, GitHub Actions will automatically build and publish your website!
-
-### Option B: Vercel or Netlify (1-Click Deployment)
-
-- **Vercel**: Go to [vercel.com](https://vercel.com), click **Add New Project**, import your GitHub repository, and click **Deploy**.
-- **Netlify**: Go to [netlify.com](https://netlify.com), click **Add new site** > **Import an existing project**, connect your repository, and deploy.
-
----
-
-## 🛠️ Local Development & Editing
-
-To edit and preview the project on your computer:
-
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-
-2. **Start Development Server**:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:3000` in your browser.
-
-3. **Build for Production**:
-   ```bash
-   npm run build
-   ```
-
----
-
-## 📁 Project Structure
-
-- `src/App.tsx` - Main router configuration
-- `src/layouts/Layout.tsx` - Layout wrapper with Header, Footer & Floating WhatsApp Widget
-- `src/components/` - Reusable UI components (Header, Footer, WhatsAppWidget, ScrollToTop)
-- `src/pages/` - Page components (Home, AllergyConditions, ConditionDetail, BookAppointment, etc.)
-- `src/data/content.ts` - Medical conditions list & patient testimonials data
-- `src/index.css` - Global Tailwind styling & typography rules
+## Important content rules
+This is a medical site. No invented cures, statistics, outcomes, testimonials,
+credentials, or structured-data ratings. Unverified facts are logged in
+`docs/MISSING-INFORMATION.md`, not guessed.

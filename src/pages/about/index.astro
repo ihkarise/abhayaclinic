@@ -1,0 +1,62 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import CtaBand from '@components/CtaBand.astro';
+import { clinic } from '@data/clinic';
+import { graph, breadcrumbSchema, organizationSchema } from '@/lib/schema';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'About', url: '/about/' },
+];
+---
+
+<BaseLayout
+  title="About Abhaya Allergy Center"
+  description="Abhaya Allergy Center in Nilambur, Kerala provides allergy-focused care and health guidance with Dr Varun Vasudev, offering in-person and online consultations."
+  canonical="/about/"
+  schema={graph(breadcrumbSchema(crumbs), organizationSchema())}
+>
+  <section class="container-x pt-10">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">About Abhaya</h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+      An allergy-focused practice in Nilambur, Kerala, led by {clinic.doctor}.
+    </p>
+  </section>
+
+  <section class="container-x py-14">
+    <div class="prose-clinic max-w-3xl">
+      <p>
+        Abhaya Allergy Center offers care and clear guidance for allergy-related
+        concerns — including allergic rhinitis, sinus allergy, asthma and
+        wheezing, adenoid enlargement, eczema and urticaria. Consultations are
+        available both in person at the clinic and online.
+      </p>
+
+      <h2>Our mission</h2>
+      <p>
+        Our objective is to deliver accessible, patient-focused care that
+        supports emotional, physical and overall wellbeing for everyone who
+        consults us, with an emphasis on preventive health education.
+      </p>
+
+      <h2>Our vision</h2>
+      <p>
+        To address people's health needs by providing accessible,
+        patient-centred care and to be a trusted allergy-focused practice in the
+        region.
+      </p>
+
+      <h2>Why patients choose Abhaya</h2>
+      <ul>
+        <li><strong>Allergy focus.</strong> Care and education centred on allergy-related concerns.</li>
+        <li><strong>Online consultations.</strong> Consult from the comfort of your home, wherever you are.</li>
+        <li><strong>Counselling &amp; guidance.</strong> Supportive guidance alongside consultation.</li>
+        <li><strong>Health education.</strong> {clinic.doctor} regularly shares health information and has conducted health awareness sessions.</li>
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

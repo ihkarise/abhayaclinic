@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import WhatsAppButton from '@components/WhatsAppButton.astro';
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The page you are looking for could not be found."
+  noindex={true}
+>
+  <section class="container-x py-24 text-center">
+    <p class="font-heading text-6xl font-bold text-primary/30">404</p>
+    <h1 class="mt-4 font-heading text-3xl font-bold">Page not found</h1>
+    <p class="mx-auto mt-3 max-w-md text-ink-soft">
+      The page you are looking for may have moved. Here are some helpful places
+      to go instead.
+    </p>
+    <nav aria-label="Helpful links" class="mx-auto mt-8 flex max-w-md flex-wrap justify-center gap-3">
+      <a href="/conditions/" class="rounded-full bg-soft px-4 py-2 text-sm font-medium text-primary hover:bg-leaf hover:text-white">Allergy Conditions</a>
+      <a href="/about/dr-varun-vasudev/" class="rounded-full bg-soft px-4 py-2 text-sm font-medium text-primary hover:bg-leaf hover:text-white">About Dr Varun</a>
+      <a href="/blog/" class="rounded-full bg-soft px-4 py-2 text-sm font-medium text-primary hover:bg-leaf hover:text-white">Health Blog</a>
+      <a href="/contact/" class="rounded-full bg-soft px-4 py-2 text-sm font-medium text-primary hover:bg-leaf hover:text-white">Contact</a>
+    </nav>
+    <div class="mt-8">
+      <WhatsAppButton context="default" label="Chat on WhatsApp" size="lg" />
+    </div>
+  </section>
+</BaseLayout>

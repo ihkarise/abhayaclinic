@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import CtaBand from '@components/CtaBand.astro';
+import { graph, breadcrumbSchema } from '@/lib/schema';
+
+const conditions = (await getCollection('conditions')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Allergy Conditions', url: '/conditions/' },
+];
+---
+
+<BaseLayout
+  title="Allergy Conditions"
+  description="Explore the allergy conditions we focus on at Abhaya Allergy Center, Nilambur — allergic rhinitis, sinus allergy, asthma & wheezing, adenoid enlargement, eczema and urticaria."
+  canonical="/conditions/"
+  schema={graph(breadcrumbSchema(crumbs))}
+>
+  <section class="container-x pt-10">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">Allergy Conditions</h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+      Understanding your condition is the first step. Select a concern below to
+      learn about its symptoms, common triggers and when to seek help.
+    </p>
+  </section>
+
+  <section class="container-x py-14">
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        conditions.map((c) => (
+          <a href={`/conditions/${c.id}/`} class="group rounded-2xl border border-black/5 bg-white p-6 shadow-card transition-transform hover:-translate-y-1">
+            <h2 class="font-heading text-lg font-semibold text-ink group-hover:text-primary">{c.data.title}</h2>
+            <p class="mt-2 text-sm text-ink-soft">{c.data.summary}</p>
+            <span class="mt-4 inline-flex text-sm font-semibold text-primary">Learn more →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

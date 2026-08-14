@@ -1,0 +1,69 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import { graph, breadcrumbSchema } from '@/lib/schema';
+
+const CATEGORY_LABELS: Record<string, string> = {
+  allergies: 'Allergies',
+  'respiratory-health': 'Respiratory Health',
+  'skin-health': 'Skin & Allergy',
+  'childrens-allergy-health': "Children's Allergy Health",
+  'general-health': 'General Health Education',
+  'clinic-updates': 'Clinic Updates',
+};
+
+export const getStaticPaths = (async () => {
+  const posts = (await getCollection('blog')).filter((p) => !p.data.draft);
+  const categories = [...new Set(posts.map((p) => p.data.category))];
+  return categories.map((category) => ({
+    params: { category },
+    props: {
+      category,
+      posts: posts.filter((p) => p.data.category === category),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { category, posts } = Astro.props;
+const label = CATEGORY_LABELS[category] ?? category;
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Health Blog', url: '/blog/' },
+  { name: label, url: `/blog/category/${category}/` },
+];
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout
+  title={`${label} | Health Blog`}
+  description={`${label} articles from Abhaya Allergy Center — allergy education and health information.`}
+  canonical={`/blog/category/${category}/`}
+  schema={graph(breadcrumbSchema(crumbs))}
+>
+  <section class="container-x pt-10">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">{label}</h1>
+    <p class="mt-4 text-lg text-ink-soft">{posts.length} article{posts.length === 1 ? '' : 's'}</p>
+  </section>
+
+  <section class="container-x py-14">
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        posts.map((p) => (
+          <article class="flex flex-col rounded-2xl border border-black/5 bg-white p-6 shadow-card">
+            <h2 class="font-heading text-lg font-semibold text-ink">
+              <a href={`/blog/${p.id}/`} class="hover:text-primary">{p.data.title}</a>
+            </h2>
+            <p class="mt-2 flex-1 text-sm text-ink-soft">{p.data.excerpt ?? p.data.description}</p>
+            <time datetime={p.data.publishedAt.toISOString()} class="mt-4 text-xs text-ink-soft">{fmt(p.data.publishedAt)}</time>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
