@@ -1,0 +1,107 @@
+---
+/**
+ * Gallery grid + category filtering (Phase 3C — Milestone 2).
+ *
+ * Server-renders every gallery image (discovery never depends on JavaScript)
+ * and progressively enhances the category chips into working filters. The
+ * Phase 3B media foundation is reused, not modified: images come from
+ * `getGalleryPhotos()` and each item's category is derived at build time via
+ * the Milestone 1 model in `src/lib/gallery.ts`.
+ *
+ * No lightbox / modal / navigation here — that is Milestone 3.
+ */
+import { Image } from 'astro:assets';
+import type { GalleryPhoto } from '@/lib/media';
+import { galleryCategories, categoryForStem } from '@/lib/gallery';
+
+interface Props {
+  photos: GalleryPhoto[];
+}
+
+const { photos } = Astro.props;
+
+// `getGalleryPhotos()` exposes only { image, alt }; alt is the filename stem
+// with hyphens/underscores turned into spaces. Reconstruct a stem-equivalent
+// (spaces -> hyphens) so the Milestone 1 prefix matcher can classify it,
+// without touching the Phase 3B media contract.
+const items = photos.map((p) => ({
+  ...p,
+  category: categoryForStem(p.alt.replace(/\s+/g, '-')),
+}));
+---
+
+{
+  items.length === 0 ? (
+    <div class="mt-8 rounded-2xl border border-dashed border-black/10 p-10 text-center">
+      <p class="text-ink-soft">
+        Optimized gallery images will be added here, each with a descriptive
+        filename, dimensions and alt text.
+      </p>
+    </div>
+  ) : (
+    <div data-gallery>
+      <div
+        class="flex flex-wrap gap-2"
+        role="group"
+        aria-label="Filter gallery by category"
+      >
+        {galleryCategories.map((c) => (
+          <button
+            type="button"
+            data-filter={c.slug}
+            aria-pressed={c.slug === 'all' ? 'true' : 'false'}
+            class="cursor-pointer rounded-full px-4 py-1.5 text-sm font-medium bg-soft text-primary aria-[pressed=true]:bg-primary aria-[pressed=true]:text-white"
+          >
+            {c.label}
+          </button>
+        ))}
+      </div>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map(({ image, alt, category }) => (
+          <div data-category={category}>
+            <Image
+              src={image}
+              alt={alt}
+              width={800}
+              height={600}
+              class="aspect-[4/3] w-full rounded-2xl object-cover shadow-card"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+<script>
+  // Progressive enhancement: filter the already-rendered grid. Without this
+  // script every image is visible and the buttons are simply inert.
+  const root = document.querySelector<HTMLElement>('[data-gallery]');
+  if (root) {
+    const buttons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('button[data-filter]')
+    );
+    const items = Array.from(
+      root.querySelectorAll<HTMLElement>('[data-category]')
+    );
+
+    const apply = (active: string) => {
+      for (const item of items) {
+        const match = active === 'all' || item.dataset.category === active;
+        item.hidden = !match;
+      }
+      for (const btn of buttons) {
+        btn.setAttribute(
+          'aria-pressed',
+          String(btn.dataset.filter === active)
+        );
+      }
+    };
+
+    for (const btn of buttons) {
+      btn.addEventListener('click', () => apply(btn.dataset.filter ?? 'all'));
+    }
+  }
+</script>
