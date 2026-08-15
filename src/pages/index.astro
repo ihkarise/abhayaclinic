@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import WhatsAppButton from '@components/WhatsAppButton.astro';
 import CallButton from '@components/CallButton.astro';
@@ -14,6 +15,10 @@ import {
   physicianSchema,
 } from '@/lib/schema';
 import { isPublished, isPublishedPost } from '@/lib/content';
+import { getPhoto } from '@/lib/media';
+
+const heroPhoto = getPhoto('hero');
+const doctorPortrait = getPhoto('doctor-portrait');
 
 const conditions = (await getCollection('conditions'))
   .filter(isPublished)
@@ -61,10 +66,23 @@ const schema = graph(
         <p class="mt-4 text-sm text-ink-soft">{clinic.hours.summary} · {clinic.address.locality}, {clinic.address.region}</p>
       </div>
       <div class="relative">
-        <div class="aspect-[4/3] rounded-3xl bg-gradient-to-br from-soft to-leaf/30 shadow-card grid place-items-center">
-          <span class="font-heading text-6xl font-bold text-primary/30">ABHAYA</span>
-        </div>
-        {/* TODO: replace placeholder with optimized clinic/hero image (see MISSING-INFORMATION). */}
+        {
+          heroPhoto ? (
+            <Image
+              src={heroPhoto}
+              alt=""
+              width={1600}
+              height={1200}
+              class="aspect-[4/3] w-full rounded-3xl object-cover shadow-card"
+              loading="eager"
+              fetchpriority="high"
+            />
+          ) : (
+            <div class="aspect-[4/3] rounded-3xl bg-gradient-to-br from-soft to-leaf/30 shadow-card grid place-items-center">
+              <span class="font-heading text-6xl font-bold text-primary/30">ABHAYA</span>
+            </div>
+          )
+        }
       </div>
     </div>
   </section>
@@ -72,7 +90,22 @@ const schema = graph(
   {/* About the doctor */}
   <section class="container-x py-20">
     <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-      <div class="order-2 aspect-square max-w-md rounded-3xl bg-soft lg:order-1"></div>
+      <div class="order-2 aspect-square max-w-md lg:order-1">
+        {
+          doctorPortrait ? (
+            <Image
+              src={doctorPortrait}
+              alt={clinic.doctor}
+              width={800}
+              height={800}
+              class="h-full w-full rounded-3xl object-cover shadow-card"
+              loading="lazy"
+            />
+          ) : (
+            <div class="h-full w-full rounded-3xl bg-soft" />
+          )
+        }
+      </div>
       <div class="order-1 lg:order-2">
         <h2 class="font-heading text-3xl font-bold">About Dr Varun Vasudev</h2>
         <p class="mt-4 text-ink-soft">

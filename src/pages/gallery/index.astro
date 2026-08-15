@@ -1,8 +1,12 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
 import CtaBand from '@components/CtaBand.astro';
 import { graph, breadcrumbSchema } from '@/lib/schema';
+import { getGalleryPhotos } from '@/lib/media';
+
+const photos = getGalleryPhotos();
 
 const crumbs = [
   { name: 'Home', url: '/' },
@@ -38,12 +42,29 @@ const categories = [
         <span class="rounded-full bg-soft px-4 py-1.5 text-sm font-medium text-primary">{c}</span>
       ))}
     </div>
-    <div class="mt-8 rounded-2xl border border-dashed border-black/10 p-10 text-center">
-      <p class="text-ink-soft">
-        Optimized gallery images will be added here, each with a descriptive
-        filename, dimensions and alt text.
-      </p>
-    </div>
+    {
+      photos.length > 0 ? (
+        <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {photos.map(({ image, alt }) => (
+            <Image
+              src={image}
+              alt={alt}
+              width={800}
+              height={600}
+              class="aspect-[4/3] w-full rounded-2xl object-cover shadow-card"
+              loading="lazy"
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="mt-8 rounded-2xl border border-dashed border-black/10 p-10 text-center">
+          <p class="text-ink-soft">
+            Optimized gallery images will be added here, each with a descriptive
+            filename, dimensions and alt text.
+          </p>
+        </div>
+      )
+    }
   </section>
 
   <CtaBand />

@@ -1,26 +1,36 @@
 # Image Audit
 
-_Reviewed Phase 2 — unchanged: still no raster images. Asset requirements are
-consolidated in `BRAND-ASSET-REQUIREMENTS.md`; patient-image privacy rules are
-in `CONTENT-GOVERNANCE.md` (before/after + testimonials collections)._
+_Reviewed Phase 3B — still no real raster images shipped, but the intake +
+rendering foundation is now wired. Asset requirements are consolidated in
+`BRAND-ASSET-REQUIREMENTS.md`; patient-image privacy rules are in
+`CONTENT-GOVERNANCE.md` (before/after + testimonials collections)._
 
 ## Current state
-The site currently ships **no raster images**. All visuals (hero, doctor
-portrait area, map preview, card art) are lightweight CSS placeholders
-(gradients / solid tokens). The only image asset in the repo is the SVG
-favicon.
+The site still ships **no real raster images** — nothing was fabricated to
+fill the gap. What changed in Phase 3B is the plumbing: `src/lib/media.ts`
+(via `import.meta.glob`) detects real files dropped into `src/assets/brand/`
+and `src/assets/photos/*` and, when present, renders them through
+`astro:assets <Image>` in place of the current CSS placeholder. Until a file
+arrives at the documented path (`src/assets/README.md`), every visual (hero,
+header mark, doctor portrait area, map preview, gallery grid) still renders
+its existing lightweight placeholder (gradient / solid token / honest empty
+state).
 
 | Image | Source | Dimensions | Format | Alt text | Used on | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
 | `public/favicon.svg` | authored | 32×32 (scalable) | SVG | n/a (icon) | all pages | Placeholder brand mark (letter "A"), pending real logo |
 
-`<img>` tags in source: **0**. `astro:assets <Image>` usage: **0**.
-Oversized images: **none** (there are none yet).
+`<img>` tags in source: **0**. `astro:assets <Image>` usage: wired at 5 call
+sites (`Header`, home hero, home doctor section, doctor page portrait,
+gallery grid) — all conditional, all currently rendering `null` (no file
+present yet) and falling back to the placeholder. Oversized images: **none**
+(there are none yet).
 
 ## Consequence
 There is no image-weight or layout-shift risk today (CLS measured 0). Images
 become a performance concern only once real assets are added — so the rules
-below apply from the first real image onward.
+below apply from the first real image onward. Run `npm run assets:check` to
+see, at a glance, which required assets are still missing.
 
 ## Required real assets (pending — see MISSING-INFORMATION.md)
 | Asset | Target format | Target dimensions | Loading | Page | Priority |
