@@ -43,6 +43,8 @@ those are static files served as-is from `public/` (`public/favicon.ico`,
   and testimonial imagery has its own gating — see `CONTENT-GOVERNANCE.md`.
   Strip EXIF/GPS from any photo before adding it here.
 - Once a file is added, it is processed through `astro:assets` automatically
-  (AVIF/WebP, responsive sizing, no layout shift) — no manual optimization
-  needed before dropping it in, though a reasonably sized source (not a
-  50 MB camera original) keeps builds fast.
+  (optimized WebP at intrinsic width/height, so no layout shift) — no manual
+  optimization needed before dropping it in, though a reasonably sized source
+  (not a 50 MB camera original) keeps builds fast. (AVIF + a multi-width
+  responsive `srcset` are a future enhancement — see
+  `docs/BRAND-ASSET-REQUIREMENTS.md`.)

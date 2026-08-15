@@ -39,8 +39,13 @@ required. Run `npm run assets:check` at any time for a present/missing report.
 ## Handling rules when assets arrive
 - Drop the file at the exact path in the register above — `src/lib/media.ts`
   and the pages that call it (`Header`, home, doctor page, gallery) already do
-  the rest via `astro:assets` (`<Image>`) for AVIF/WebP + responsive `srcset`
-  + intrinsic dimensions (no CLS). See IMAGE-AUDIT.md.
+  the rest via `astro:assets` (`<Image>`): optimized modern-format output
+  (WebP) at intrinsic width/height, so there is no layout shift (CLS). The
+  wired call sites use `<Image>` at a fixed size (single WebP per slot); AVIF
+  and a multi-width responsive `srcset` are an available future enhancement —
+  switch a slot to `<Picture>` with `formats={['avif','webp']}` and a `widths`
+  list when that's wanted (the "AVIF + WebP" register column is the target,
+  not yet what the build emits). See IMAGE-AUDIT.md.
 - Descriptive filenames; meaningful `alt`; decorative → `alt=""`. Gallery `alt`
   is derived from the filename (see `src/assets/README.md`), so name the file
   the way you'd describe the photo.
