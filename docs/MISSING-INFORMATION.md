@@ -11,10 +11,16 @@ shows an honest empty state. **Confirm each item with the clinic before launch.*
 - [ ] **Official email** on the new domain (currently `info@drvarunvasudev.com`).
 - [ ] **Exact clinic geo-coordinates** (lat/lng) — `clinic.maps.geo` is `null`;
       `LocalBusiness` geo is omitted until provided.
-- [ ] **Google Business Profile URL: Missing.** No profile URL is confirmed. No
-      GBP integration is created or claimed. If a profile exists, record the
-      verified URL here and add to `clinic.ts` + `sameAs`; if not, it stays
-      **Missing**. (Maps directions currently use a generic query.)
+- [x] **Google Business Profile reviews URL: Confirmed** (Phase 3D M2a). The
+      owner-supplied, verified reviews-view URL for *Abhaya Homoeopathic Medical
+      Center*, Nilambur (CID `0x3ba63b77def5996b:0xed73d3be36a1734`) is stored in
+      `clinic.maps.reviewsUrl` and surfaced as a "Read patients' Google reviews →"
+      link on `/contact/`. Link-out only: no review content, reviewer data,
+      rating or count is stored or reproduced, and no GBP API integration is
+      created or claimed. Not added to `sameAs` — the stored value is a
+      reviews-view deep link, not a clean canonical entity URL; a canonical GBP
+      URL for `sameAs` remains outstanding. (Maps *directions* still use a
+      generic query.)
 - [ ] **Opening days.** About page says Mon–Sat 9:00 AM–7:00 PM; Contact page
       omits days. Sunday assumed closed. Confirm.
 - [ ] **Facebook / Twitter URLs** (blank in `clinic.social`). Instagram

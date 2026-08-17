@@ -50,6 +50,15 @@ export const clinic = {
   maps: {
     directionsUrl:
       'https://www.google.com/maps/dir/?api=1&destination=Abhaya+Homoeopathic+Medical+Center+Nilambur',
+    /**
+     * Official Google Business Profile reviews view (owner-supplied, verified
+     * against this listing: name "Abhaya Homoeopathic Medical Center", CID
+     * 0x3ba63b77def5996b:0xed73d3be36a1734, ~11.2778,76.2250 = Nilambur).
+     * `!1b1` opens the reviews tab. We only link out — no review content,
+     * reviewer data, rating or count is ever stored or reproduced.
+     */
+    reviewsUrl:
+      'https://www.google.com/maps/place/Abhaya+Homoeopathic+Medical+Center/@11.2778147,73.7860808,8z/data=!4m12!1m2!2m1!1sabhaya+homeo+clinic!3m8!1s0x3ba63b77def5996b:0xed73d3be36a1734!8m2!3d11.2778147!4d76.2250456!9m1!1b1!15sChNhYmhheWEgaG9tZW8gY2xpbmljWhUiE2FiaGF5YSBob21lbyBjbGluaWOSAQlob21lb3BhdGiaASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVTldYelZNWW1KbkVBReABAPoBBQj2AhBD!16s%2Fg%2F11kq3jrmjy',
     /** Coordinates NOT yet verified — see docs/MISSING-INFORMATION.md. */
     geo: null as null | { lat: number; lng: number },
   },
