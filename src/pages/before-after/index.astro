@@ -1,8 +1,19 @@
 ---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
 import CtaBand from '@components/CtaBand.astro';
 import { graph, breadcrumbSchema } from '@/lib/schema';
+
+// Phase 3D M1 — Before/After render path.
+// Render only cases that are BOTH published and consent-confirmed. Both gates
+// default to false in the schema, so anything that omits either stays hidden
+// (the fail-safe default for patient content). caseId is used only for stable
+// ordering — it is never displayed.
+const cases = (await getCollection('beforeAfter'))
+  .filter((c) => c.data.published === true && c.data.consentConfirmed === true)
+  .sort((a, b) => a.data.caseId.localeCompare(b.data.caseId));
 
 const crumbs = [
   { name: 'Home', url: '/' },
@@ -26,14 +37,61 @@ const crumbs = [
   </section>
 
   <section class="container-x py-14">
-    <div class="rounded-2xl border border-dashed border-black/10 p-10 text-center">
-      <p class="mx-auto max-w-xl text-ink-soft">
-        Before &amp; after cases are being prepared. Any images published here
-        will be consent-approved, stripped of identifying details and metadata,
-        and shown without invented diagnoses, timeframes or outcome claims.
-        Individual results vary.
-      </p>
-    </div>
+    {
+      cases.length === 0 ? (
+        <div class="rounded-2xl border border-dashed border-black/10 p-10 text-center">
+          <p class="mx-auto max-w-xl text-ink-soft">
+            Before &amp; after cases are being prepared. Any images published here
+            will be consent-approved, stripped of identifying details and metadata,
+            and shown without invented diagnoses, timeframes or outcome claims.
+            Individual results vary.
+          </p>
+        </div>
+      ) : (
+        <div class="space-y-8">
+          {cases.map((c) => (
+            <article class="rounded-2xl border border-black/5 bg-white p-6 shadow-card">
+              <h2 class="font-heading text-xl font-semibold text-ink">
+                {c.data.conditionLabel}
+              </h2>
+
+              {(c.data.beforeImage || c.data.afterImage) && (
+                <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                  {c.data.beforeImage && (
+                    <figure>
+                      <Image
+                        src={c.data.beforeImage}
+                        alt={c.data.beforeAlt ?? `${c.data.conditionLabel} — before`}
+                        class="w-full rounded-xl object-cover shadow-card"
+                        loading="lazy"
+                      />
+                      <figcaption class="mt-2 text-sm font-medium text-ink-soft">
+                        Before
+                      </figcaption>
+                    </figure>
+                  )}
+                  {c.data.afterImage && (
+                    <figure>
+                      <Image
+                        src={c.data.afterImage}
+                        alt={c.data.afterAlt ?? `${c.data.conditionLabel} — after`}
+                        class="w-full rounded-xl object-cover shadow-card"
+                        loading="lazy"
+                      />
+                      <figcaption class="mt-2 text-sm font-medium text-ink-soft">
+                        After
+                      </figcaption>
+                    </figure>
+                  )}
+                </div>
+              )}
+
+              <p class="mt-4 text-ink-soft">{c.data.description}</p>
+            </article>
+          ))}
+        </div>
+      )
+    }
   </section>
 
   <CtaBand />
