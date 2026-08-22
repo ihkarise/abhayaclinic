@@ -113,4 +113,33 @@
   .card-hover:hover {
     transform: translateY(-0.25rem);
   }
+
+  /*
+   * Shared button base. The inline-flex / centred / gap / rounded-full /
+   * semibold treatment repeated verbatim across WhatsAppButton, CallButton
+   * and DirectionsButton. Size (padding + text), colour variant and the
+   * `transition-colors` hover stay on each usage, so every existing button
+   * appearance is preserved exactly — this is consolidation, not a redesign.
+   */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+  }
+
+  /*
+   * Shared pill/chip shape for the small rounded-full navigation chips in the
+   * header, footer and 404 page. Only the shape is shared; background, colour,
+   * padding, text size, weight and any hover transition stay on each usage so
+   * the existing chip appearances are preserved.
+   */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+  }
 }
