@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHeader from '@components/PageHeader.astro';
-import WhatsAppButton from '@components/WhatsAppButton.astro';
+import ConsultCard from '@components/ConsultCard.astro';
 import CtaBand from '@components/CtaBand.astro';
 import { graph, breadcrumbSchema } from '@/lib/schema';
 import { isPublished } from '@/lib/content';
@@ -97,11 +97,11 @@ const schema = faqSchema
       </div>
 
       <aside class="lg:sticky lg:top-24 lg:self-start">
-        <div class="card p-6">
-          <h2 class="font-heading text-lg font-semibold">Discuss your symptoms</h2>
-          <p class="mt-2 text-sm text-ink-soft">Talk to {`Abhaya Allergy Center`} about consultation for {data.title.toLowerCase()}.</p>
-          <WhatsAppButton condition={data.title} label="Chat on WhatsApp" class="mt-4 w-full" />
-        </div>
+        <ConsultCard
+          heading="Discuss your symptoms"
+          text={`Talk to Abhaya Allergy Center about consultation for ${data.title.toLowerCase()}.`}
+          condition={data.title}
+        />
 
         {
           related.length > 0 && (
