@@ -131,7 +131,7 @@ const schema = graph(
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
           conditions.map((c) => (
-            <a href={`/conditions/${c.id}/`} class="group rounded-2xl bg-white p-6 shadow-card transition-transform hover:-translate-y-1">
+            <a href={`/conditions/${c.id}/`} class="group card card-hover p-6">
               <h3 class="font-heading text-lg font-semibold text-ink group-hover:text-primary">{c.data.title}</h3>
               <p class="mt-2 text-sm text-ink-soft">{c.data.summary}</p>
               <span class="mt-4 inline-flex text-sm font-semibold text-primary">Learn more →</span>
@@ -151,7 +151,7 @@ const schema = graph(
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
         services.map((s) => (
-          <a href={`/services/${s.id}/`} class="rounded-2xl border border-black/5 p-6 transition-colors hover:border-primary/30 hover:bg-mist">
+          <a href={`/services/${s.id}/`} class="card card-hover p-6">
             <h3 class="font-heading text-lg font-semibold text-ink">{s.data.title}</h3>
             <p class="mt-2 text-sm text-ink-soft">{s.data.summary}</p>
           </a>
@@ -174,7 +174,7 @@ const schema = graph(
           </div>
           <div class="grid gap-5 md:grid-cols-3">
             {posts.map((p) => (
-              <a href={`/blog/${p.id}/`} class="rounded-2xl bg-white p-6 shadow-card">
+              <a href={`/blog/${p.id}/`} class="card card-hover p-6">
                 <span class="text-xs font-semibold uppercase tracking-wide text-primary">{p.data.category.replace('-', ' ')}</span>
                 <h3 class="mt-2 font-heading text-lg font-semibold text-ink">{p.data.title}</h3>
                 <p class="mt-2 text-sm text-ink-soft">{p.data.excerpt ?? p.data.description}</p>

@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Breadcrumbs from '@components/Breadcrumbs.astro';
+import PageHeader from '@components/PageHeader.astro';
 import WhatsAppButton from '@components/WhatsAppButton.astro';
 import CtaBand from '@components/CtaBand.astro';
 import { doctor } from '@data/doctor';
@@ -30,13 +30,7 @@ const subtitle = [primaryQual?.degree, 'Allergy-focused consultation']
   canonical="/about/dr-varun-vasudev/"
   schema={graph(breadcrumbSchema(crumbs), physicianSchema())}
 >
-  <header class="bg-mist">
-    <div class="container-x py-12">
-      <Breadcrumbs crumbs={crumbs} />
-      <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">{doctor.name}</h1>
-      <p class="mt-4 max-w-2xl text-lg text-ink-soft">{subtitle}</p>
-    </div>
-  </header>
+  <PageHeader crumbs={crumbs} title={doctor.name} lead={subtitle} />
 
   <div class="container-x grid gap-12 py-14 lg:grid-cols-[1fr_320px]">
     <div class="prose-clinic max-w-none">

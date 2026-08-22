@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Breadcrumbs from '@components/Breadcrumbs.astro';
+import PageHeader from '@components/PageHeader.astro';
 import CtaBand from '@components/CtaBand.astro';
 import GalleryGrid from '@components/GalleryGrid.astro';
 import { graph, breadcrumbSchema } from '@/lib/schema';
@@ -20,13 +20,11 @@ const crumbs = [
   canonical="/gallery/"
   schema={graph(breadcrumbSchema(crumbs))}
 >
-  <section class="container-x pt-10">
-    <Breadcrumbs crumbs={crumbs} />
-    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">Gallery</h1>
-    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
-      Clinic photos and allergy-awareness material.
-    </p>
-  </section>
+  <PageHeader
+    crumbs={crumbs}
+    title="Gallery"
+    lead="Clinic photos and allergy-awareness material."
+  />
 
   <section class="container-x py-14">
     <GalleryGrid photos={photos} />

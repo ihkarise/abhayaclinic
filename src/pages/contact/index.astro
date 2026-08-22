@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Breadcrumbs from '@components/Breadcrumbs.astro';
+import PageHeader from '@components/PageHeader.astro';
 import WhatsAppButton from '@components/WhatsAppButton.astro';
 import CallButton from '@components/CallButton.astro';
 import DirectionsButton from '@components/DirectionsButton.astro';
@@ -19,13 +19,11 @@ const crumbs = [
   canonical="/contact/"
   schema={graph(breadcrumbSchema(crumbs), organizationSchema())}
 >
-  <section class="container-x pt-10">
-    <Breadcrumbs crumbs={crumbs} />
-    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">Contact Us</h1>
-    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
-      The quickest way to reach us is on WhatsApp.
-    </p>
-  </section>
+  <PageHeader
+    crumbs={crumbs}
+    title="Contact Us"
+    lead="The quickest way to reach us is on WhatsApp."
+  />
 
   <section class="container-x py-14">
     <div class="grid gap-10 lg:grid-cols-2">

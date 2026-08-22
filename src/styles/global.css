@@ -93,4 +93,24 @@
     text-decoration: underline;
     text-underline-offset: 2px;
   }
+
+  /*
+   * Shared card surface. One consistent border / radius / shadow across the
+   * card roles identified in the UI audit. Padding and inner content stay on
+   * each usage so existing spacing is preserved. Pair with `.card-hover` on
+   * interactive (linked) cards for the standard lift; the global
+   * reduced-motion rule already neutralises the transition.
+   */
+  .card {
+    background-color: #ffffff;
+    border: 1px solid rgb(0 0 0 / 0.05);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
+  }
+  .card-hover {
+    transition: transform 0.15s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-0.25rem);
+  }
 }
