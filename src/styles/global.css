@@ -142,4 +142,25 @@
     justify-content: center;
     border-radius: 9999px;
   }
+
+  /*
+   * Eyebrow / category label. The small uppercase primary-colour label
+   * repeated verbatim across the homepage, blog index and blog detail. Uses
+   * @apply so the compiled declarations are identical to the inline utilities
+   * (`text-xs font-semibold uppercase tracking-wide text-primary`) — display
+   * and any `mt-*` / `inline-flex` stay on each usage. No visual change.
+   */
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-wide text-primary;
+  }
+
+  /*
+   * "Learn more →" card affordance. The inline link-cue repeated verbatim on
+   * the conditions-index, services-index and homepage cards. Reproduces the
+   * exact utilities (`mt-4 inline-flex text-sm font-semibold text-primary`)
+   * via @apply. No visual change.
+   */
+  .card-more {
+    @apply mt-4 inline-flex text-sm font-semibold text-primary;
+  }
 }
