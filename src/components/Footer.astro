@@ -55,7 +55,7 @@ const socials = Object.entries(clinic.social).filter(([, url]) => url);
         <p><a href={`mailto:${clinic.email}`} class="hover:text-white">{clinic.email}</a></p>
         <p>{clinic.hours.summary}</p>
       </address>
-      <a href={whatsappUrl(whatsappMessages.booking)} target="_blank" rel="noopener noreferrer" class="mt-4 pill bg-[#0A7A39] px-4 py-2 text-xs font-semibold text-white hover:bg-[#087636]">
+      <a href={whatsappUrl(whatsappMessages.booking)} target="_blank" rel="noopener noreferrer" class="mt-4 pill bg-wa px-4 py-2 text-xs font-semibold text-white hover:bg-wa-dark">
         Chat on WhatsApp
       </a>
     </div>

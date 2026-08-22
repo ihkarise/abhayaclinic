@@ -15,6 +15,9 @@
   --color-ink: #1a1a1a; /* primary text */
   --color-ink-soft: #575757; /* secondary text (AA on white) */
 
+  --color-wa: #0A7A39; /* WhatsApp brand green — distinct from --color-primary */
+  --color-wa-dark: #087636; /* WhatsApp brand green, hover/darker */
+
   --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
   --font-heading: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
 
@@ -162,5 +165,16 @@
    */
   .card-more {
     @apply mt-4 inline-flex text-sm font-semibold text-primary;
+  }
+
+  /*
+   * Empty-state box. The dashed, centred placeholder shell repeated verbatim on
+   * the patient-stories and before/after index pages when no consent-approved
+   * entries exist yet. Reproduces the exact utilities (`rounded-2xl border
+   * border-dashed border-black/10 p-10 text-center`) via @apply — the inner
+   * copy stays on each usage. No visual change.
+   */
+  .empty-state {
+    @apply rounded-2xl border border-dashed border-black/10 p-10 text-center;
   }
 }
