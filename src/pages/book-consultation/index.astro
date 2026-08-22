@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Breadcrumbs from '@components/Breadcrumbs.astro';
+import PageHeader from '@components/PageHeader.astro';
 import WhatsAppButton from '@components/WhatsAppButton.astro';
 import CallButton from '@components/CallButton.astro';
 import { clinic } from '@data/clinic';
@@ -18,14 +18,11 @@ const crumbs = [
   canonical="/book-consultation/"
   schema={graph(breadcrumbSchema(crumbs))}
 >
-  <section class="container-x pt-10">
-    <Breadcrumbs crumbs={crumbs} />
-    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">Book a Consultation</h1>
-    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
-      Booking is simple — message us on WhatsApp and we will help you arrange a
-      time that suits you, in person or online.
-    </p>
-  </section>
+  <PageHeader
+    crumbs={crumbs}
+    title="Book a Consultation"
+    lead="Booking is simple — message us on WhatsApp and we will help you arrange a time that suits you, in person or online."
+  />
 
   <section class="container-x py-14">
     <div class="mx-auto max-w-2xl rounded-3xl border border-black/5 bg-white p-8 text-center shadow-card sm:p-12">

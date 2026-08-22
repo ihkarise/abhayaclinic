@@ -1,0 +1,28 @@
+---
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import type { Crumb } from '@/lib/schema';
+
+interface Props {
+  crumbs: Crumb[];
+  title: string;
+  /** Optional lead/intro paragraph shown under the H1. */
+  lead?: string;
+  /**
+   * Visual treatment. Defaults to the established `mist` banner used by the
+   * doctor, condition-detail and service-detail pages. `plain` drops the
+   * tinted background for pages that sit directly on the page canvas.
+   */
+  variant?: 'mist' | 'plain';
+}
+
+const { crumbs, title, lead, variant = 'mist' } = Astro.props;
+const bg = variant === 'mist' ? 'bg-mist' : '';
+---
+
+<header class={bg}>
+  <div class="container-x py-12">
+    <Breadcrumbs crumbs={crumbs} />
+    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">{title}</h1>
+    {lead && <p class="mt-4 max-w-3xl text-lg text-ink-soft">{lead}</p>}
+  </div>
+</header>

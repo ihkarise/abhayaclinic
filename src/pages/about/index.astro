@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Breadcrumbs from '@components/Breadcrumbs.astro';
+import PageHeader from '@components/PageHeader.astro';
 import CtaBand from '@components/CtaBand.astro';
 import { clinic } from '@data/clinic';
 import { graph, breadcrumbSchema, organizationSchema } from '@/lib/schema';
@@ -17,13 +17,11 @@ const crumbs = [
   canonical="/about/"
   schema={graph(breadcrumbSchema(crumbs), organizationSchema())}
 >
-  <section class="container-x pt-10">
-    <Breadcrumbs crumbs={crumbs} />
-    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">About Abhaya</h1>
-    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
-      An allergy-focused practice in Nilambur, Kerala, led by {clinic.doctor}.
-    </p>
-  </section>
+  <PageHeader
+    crumbs={crumbs}
+    title="About Abhaya"
+    lead={`An allergy-focused practice in Nilambur, Kerala, led by ${clinic.doctor}.`}
+  />
 
   <section class="container-x py-14">
     <div class="prose-clinic max-w-3xl">

@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Breadcrumbs from '@components/Breadcrumbs.astro';
+import PageHeader from '@components/PageHeader.astro';
 import CtaBand from '@components/CtaBand.astro';
 import { graph, breadcrumbSchema } from '@/lib/schema';
 import { isPublished } from '@/lib/content';
@@ -23,13 +23,11 @@ const crumbs = [
   canonical="/patient-stories/"
   schema={graph(breadcrumbSchema(crumbs))}
 >
-  <section class="container-x pt-10">
-    <Breadcrumbs crumbs={crumbs} />
-    <h1 class="mt-6 font-heading text-4xl font-bold sm:text-5xl">Patient Stories</h1>
-    <p class="mt-4 max-w-2xl text-lg text-ink-soft">
-      Experiences shared by patients, published only with their consent.
-    </p>
-  </section>
+  <PageHeader
+    crumbs={crumbs}
+    title="Patient Stories"
+    lead="Experiences shared by patients, published only with their consent."
+  />
 
   <section class="container-x py-14">
     {
