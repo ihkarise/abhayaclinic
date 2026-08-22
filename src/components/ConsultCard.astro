@@ -1,0 +1,21 @@
+---
+import WhatsAppButton from '@components/WhatsAppButton.astro';
+
+interface Props {
+  heading: string;
+  text: string;
+  /**
+   * Condition title to build a condition-specific WhatsApp message. When
+   * omitted, the card keeps the default booking behaviour (`context="booking"`).
+   */
+  condition?: string;
+}
+
+const { heading, text, condition } = Astro.props;
+---
+
+<div class="card p-6">
+  <h2 class="font-heading text-lg font-semibold">{heading}</h2>
+  <p class="mt-2 text-sm text-ink-soft">{text}</p>
+  <WhatsAppButton condition={condition} context="booking" label="Chat on WhatsApp" class="mt-4 w-full" />
+</div>

@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHeader from '@components/PageHeader.astro';
-import WhatsAppButton from '@components/WhatsAppButton.astro';
+import ConsultCard from '@components/ConsultCard.astro';
 import CtaBand from '@components/CtaBand.astro';
 import { graph, breadcrumbSchema } from '@/lib/schema';
 import { isPublished } from '@/lib/content';
@@ -49,11 +49,10 @@ const crumbs = [
       <Content />
     </div>
     <aside class="lg:sticky lg:top-24 lg:self-start">
-      <div class="card p-6">
-        <h2 class="font-heading text-lg font-semibold">Book this consultation</h2>
-        <p class="mt-2 text-sm text-ink-soft">Message us on WhatsApp to arrange a time.</p>
-        <WhatsAppButton context="booking" label="Chat on WhatsApp" class="mt-4 w-full" />
-      </div>
+      <ConsultCard
+        heading="Book this consultation"
+        text="Message us on WhatsApp to arrange a time."
+      />
     </aside>
   </div>
 
